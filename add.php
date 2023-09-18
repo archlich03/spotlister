@@ -10,12 +10,12 @@
         $data = json_decode($jsonData, true);
     
         $newEntry = [
-            "id" => count($data["data"]), 
+            "id" => ++$data["lastID"], 
             "url" => $url,
             "frequency" => (int)$frequency,
             "lastDownload" => 0,
         ];
-    
+        
         $data["data"][] = $newEntry;
     
         file_put_contents('job.json', json_encode($data, JSON_PRETTY_PRINT));
