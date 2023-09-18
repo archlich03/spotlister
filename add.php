@@ -14,7 +14,6 @@
             "url" => $url,
             "frequency" => (int)$frequency,
             "lastDownload" => 0,
-            "lastCheck" => 0,
         ];
     
         $data["data"][] = $newEntry;
