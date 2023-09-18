@@ -32,7 +32,7 @@
     <h1>Spotify Link to Jellyfin maintainer</h1>
     <div>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-            <p>Playlist URL: <input type="url" name="url"></p>
+            <p>Playlist URL: <input type="url" name="url" style="width: 450px;"></p>
             <span class="error"><?php echo $urlErr;?></span>
             <br>
             <p>Check frequency (in hours): <input type="number" name="frequency" min="0"></p>
