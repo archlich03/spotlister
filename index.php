@@ -54,5 +54,7 @@
             ?>
         </tbody>
     </table>
+    <br>
+    <a href="add.php">Add New Entry</a>
 </body>
 </html>
