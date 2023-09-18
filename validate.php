@@ -6,8 +6,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $urlErr = "URL is required";
     } else {
         $url = testInput($_POST["url"]);
-        if (!preg_match('#spotify\.com/playlist#i', $url)) {
-            $urlErr = "Invalid URL. It must be a Spotify playlist link.";
+        if (!preg_match('#spotify\.com/#i', $url)) {
+            $urlErr = "Invalid URL. It must be a Spotify link.";
         }
       }
       if (empty($_POST["frequency"])) {
