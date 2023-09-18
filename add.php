@@ -26,10 +26,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add a playlist</title>
+    <title>Add an element</title>
 </head>
 <body>
-    <h1>Add a playlist</h1>
+    <h1>Add an element</h1>
     <div>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <p>Playlist URL: <input type="url" name="url" style="width: 450px;"></p>
