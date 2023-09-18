@@ -29,7 +29,7 @@
     <title>Add a playlist</title>
 </head>
 <body>
-    <h1>Spotify Link to Jellyfin maintainer</h1>
+    <h1>Add a playlist</h1>
     <div>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <p>Playlist URL: <input type="url" name="url" style="width: 450px;"></p>
