@@ -6,7 +6,7 @@ $settings = array();
 // $settings['varName'] = value
 
 // Critical settings
-$settings['dataFileName'] = "data.json"; // name of the JSON file
+$settings['dataFileName'] = "job.json"; // name of the JSON file
 
 // Non-critical settings
 $settings['allowOneTimeImport'] = true; // allow importing media from a link only once.
