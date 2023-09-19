@@ -11,7 +11,7 @@
         if (!preg_match('#spotify\.com/#i', $url) || empty($_POST["url"]))
             die("URL can't be empty and must be a spotify link");
     
-        $jsonData = file_get_contents('job.json');
+        $jsonData = file_get_contents($settings['dataFileName']);
         $data = json_decode($jsonData, true);
     
         $newEntry = [
@@ -22,7 +22,7 @@
         ];
         $data["data"][] = $newEntry;
     
-        file_put_contents('job.json', json_encode($data, JSON_PRETTY_PRINT));
+        file_put_contents($settings['dataFileName'], json_encode($data, JSON_PRETTY_PRINT));
     }
 ?>
 <!DOCTYPE html>
