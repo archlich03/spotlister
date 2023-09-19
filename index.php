@@ -38,6 +38,7 @@
 </head>
 <body>
     <h1>Spotify Link to Jellyfin maintainer</h1>
+    <p class='refresh'>Next playlist refresh in: <span id="timer">00:00:00</span></p>
     <table>
         <thead>
             <tr>
@@ -56,5 +57,36 @@
     </table>
     <br>
     <a href="add.php">Add New Entry</a>
+    <script>
+        function updateTimer() {
+            const now = new Date();
+            const currentMinutes = now.getMinutes();
+            const currentSeconds = now.getSeconds();
+            const remainingMinutes = 59 - currentMinutes;
+            const remainingSeconds = 60 - currentSeconds;
+            const formatTime = (value) => {
+                return value < 10 ? `0${value}` : value;
+            };
+
+            if (remainingMinutes === 0 && remainingSeconds === 0) {
+                clearInterval(timerInterval);
+                document.getElementById('timer').textContent = "00:00:00";
+                setTimeout(updateTimer, 1000); // Restart the timer
+            } else {
+                let countdown = `00:00`;
+                // `${formatTime(remainingMinutes)}:${formatTime(remainingSeconds)}`;
+                if (remainingSeconds != 60)
+                    document.getElementById('timer').textContent = `${formatTime(remainingMinutes)}:${formatTime(remainingSeconds)}`;
+                else
+                    document.getElementById('timer').textContent = `${formatTime(remainingMinutes+1)}:00`;
+            }
+        }
+
+        // Initial call to set the timer
+        updateTimer();
+
+        // Update the timer every second
+        const timerInterval = setInterval(updateTimer, 1000);
+    </script>
 </body>
 </html>
