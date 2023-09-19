@@ -44,3 +44,12 @@ function testInput($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
+function redirectIndex() {
+    header("Location: index.php");
+    exit;
+}
+function readJSON($filename) {
+    $jsonData = file_get_contents($filename);
+    $data = json_decode($jsonData, true);
+    return $data;
+}
