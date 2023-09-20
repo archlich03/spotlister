@@ -1,28 +1,24 @@
 <?php
     require 'functions.php';
+    require 'validate.php';
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($urlErr) && empty($frequencyErr)) {
-        $url = testInput($_POST["url"]);
-        $frequency = (int)testInput($_POST["frequency"]);
-        
-        if ($frequency > $settings['maxRefreshTime'] || $frequency < -1)
-            die("Invalid frequency range.");
-
-        if (!preg_match('#spotify\.com/#i', $url) || empty($_POST["url"]))
-            die("URL can't be empty and must be a spotify link");
+        $url = $_POST["url"];
+        $frequency = $_POST["frequency"];
     
-        $jsonData = file_get_contents($settings['dataFileName']);
+        $jsonData = file_get_contents('job.json');
         $data = json_decode($jsonData, true);
     
         $newEntry = [
             "id" => ++$data["lastID"], 
             "url" => $url,
-            "frequency" => $frequency,
+            "frequency" => (int)$frequency,
             "lastDownload" => 0,
         ];
+        
         $data["data"][] = $newEntry;
     
-        file_put_contents($settings['dataFileName'], json_encode($data, JSON_PRETTY_PRINT));
+        file_put_contents('job.json', json_encode($data, JSON_PRETTY_PRINT));
     }
 ?>
 <!DOCTYPE html>
