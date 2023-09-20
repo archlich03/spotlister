@@ -21,7 +21,7 @@
             $data["data"][$key]["url"] = $_POST["url"];
             $data["data"][$key]["frequency"] = (int)$_POST["frequency"];
             
-            file_put_contents('job.json', json_encode($data, JSON_PRETTY_PRINT));
+            file_put_contents($settings['dataFileName'], json_encode($data, JSON_PRETTY_PRINT));
             redirectIndex();
         } else {
             die ("ID not found");

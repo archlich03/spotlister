@@ -6,8 +6,7 @@
         $url = $_POST["url"];
         $frequency = $_POST["frequency"];
     
-        $jsonData = file_get_contents('job.json');
-        $data = json_decode($jsonData, true);
+        $data = readJSON($settings['dataFileName']);
     
         $newEntry = [
             "id" => ++$data["lastID"], 
@@ -18,7 +17,7 @@
         
         $data["data"][] = $newEntry;
     
-        file_put_contents('job.json', json_encode($data, JSON_PRETTY_PRINT));
+        file_put_contents($settings['dataFileName'], json_encode($data, JSON_PRETTY_PRINT));
     }
 ?>
 <!DOCTYPE html>
