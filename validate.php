@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
       if (empty($_POST["frequency"])) {
         $frequencyErr = "Check frequency is required";
-    } elseif (!is_numeric($_POST["frequency"]) || $_POST["frequency"] <= -1) {
+    } elseif (!is_numeric($_POST["frequency"]) || $_POST["frequency"] < -1) {
         $frequencyErr = "Check frequency must be bigger than -1";
     }
   
