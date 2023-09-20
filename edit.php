@@ -7,7 +7,7 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && empty($urlErr) && empty($frequencyErr)) {
         $id = (int)$_POST["id"];
     
-        $data = readJSON('job.json');
+        $data = readJSON($settings['dataFileName']);
     
         $elementKey = null;
         foreach ($data["data"] as $key => $item) {
@@ -28,13 +28,14 @@
         }
         
     } 
-    elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
+    elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && empty($urlErr)) {
         
         $id = (int)$_GET["id"];
 
-        $data = readJSON('job.json');
+        $data = readJSON($settings['dataFileName']);
     
         $element = null;
+        
         foreach ($data["data"] as $item) {
             if ($item["id"] === $id) {
                 $element = $item;
@@ -69,7 +70,7 @@
             <p>Playlist URL: <input type="url" name="url" style="width: 450px;" value="<?php echo htmlspecialchars($url); ?>"></p>
             <span class="error"><?php echo $urlErr;?></span>
             <br>
-            <p>Check frequency (in hours): <input type="number" name="frequency" min="-1" value="<?php echo htmlspecialchars($frequency); ?>"></p>
+            <p>Check frequency (in hours): <input type="number" name="frequency" min="-1" max="<?php echo $settings['maxRefreshTime']; ?>" value="<?php echo htmlspecialchars($frequency); ?>"></p>
             <span class="error"><?php echo $frequencyErr;?></span>
             <br><br>
 
