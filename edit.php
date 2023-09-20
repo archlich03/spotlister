@@ -24,7 +24,7 @@
             file_put_contents('job.json', json_encode($data, JSON_PRETTY_PRINT));
             redirectIndex();
         } else {
-            redirectIndex();
+            die ("ID not found");
         }
         
     } 
@@ -46,8 +46,11 @@
             $url = $element["url"];
             $frequency = $element["frequency"];
         } else {
-            redirectIndex();
+            die ("ID not found");
         }
+    }
+    else {
+        die ("Invalid request");
     }
 ?>
 <!DOCTYPE html>
