@@ -6,7 +6,7 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         $id = (int)$_POST["id"];
-
+        testInput($id);
         $data = readJSON('job.json');
 
         $elementKey = null;
@@ -24,7 +24,7 @@
 
             redirectIndex();
         } else {
-            redirectIndex();
+            die ("Element not found");
         }
         
     } 
@@ -40,7 +40,7 @@
     <h1>Are you sure you want to delete this element?</h1>
     <div>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-            <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
+            <input type="hidden" name="id" value="<?php echo htmlspecialchars($_GET['id']); ?>">
 
             <input class="back" type="button" value="No" onclick="location.href='index.php'">
             <input type="submit" name="submit" value="Yes">

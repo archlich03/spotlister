@@ -19,6 +19,7 @@
         $data["data"][] = $newEntry;
     
         file_put_contents('job.json', json_encode($data, JSON_PRETTY_PRINT));
+        redirectIndex();
     }
 ?>
 <!DOCTYPE html>
