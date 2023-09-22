@@ -34,7 +34,7 @@
             <p>Playlist URL: <input type="url" name="url" style="width: 450px;"></p>
             <span class="error"><?php echo $urlErr;?></span>
             <br>
-            <p>Check frequency (in hours): <input type="number" name="frequency" min="-1" max="<?php echo $settings['maxRefreshTime']; ?>"></p>
+            <p>Check frequency (in hours): <input type="number" name="frequency" min="<?=$frequencyMinValue;?>" max="<?=$settings['maxRefreshTime'];?>"></p>
             <span class="error"><?php echo $frequencyErr;?></span>
             <br><br>
 
