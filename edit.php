@@ -51,7 +51,7 @@
         }
     }
     else {
-        die ("Invalid request");
+        die ("<h1>Invalid request.</h1><br>URL related errors: $urlErr<br>Frequency related errors: $frequencyErr");
     }
 ?>
 <!DOCTYPE html>
@@ -70,7 +70,7 @@
             <p>Playlist URL: <input type="url" name="url" style="width: 450px;" value="<?php echo htmlspecialchars($url); ?>"></p>
             <span class="error"><?php echo $urlErr;?></span>
             <br>
-            <p>Check frequency (in hours): <input type="number" name="frequency" min="-1" max="<?php echo $settings['maxRefreshTime']; ?>" value="<?php echo htmlspecialchars($frequency); ?>"></p>
+            <p>Check frequency (in hours): <input type="number" name="frequency" min="<?=$frequencyMinValue;?>" max="<?=$settings['maxRefreshTime']?>" value="<?=htmlspecialchars($frequency);?>"></p>
             <span class="error"><?php echo $frequencyErr;?></span>
             <br><br>
 
