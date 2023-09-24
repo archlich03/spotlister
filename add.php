@@ -16,8 +16,8 @@
         ];
         
         $data["data"][] = $newEntry;
-    
         file_put_contents($settings['dataFileName'], json_encode($data, JSON_PRETTY_PRINT));
+        redirectIndex();
     }
 ?>
 <!DOCTYPE html>
