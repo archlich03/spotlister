@@ -24,7 +24,7 @@
 
             redirectIndex();
         } else {
-            die ("Element not found");
+            die ("<h1>Invalid request.</h1><br>Element with id $id doesn't exist.");
         }
         
     } 
