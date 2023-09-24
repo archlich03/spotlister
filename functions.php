@@ -9,15 +9,15 @@ require 'conf.php';
 function displayJSONDataToTable() {
     global $settings;
 
-    $jsonData = file_get_contents($settings['dataFileName']);
-    $data = json_decode($jsonData);
-    foreach ($data->data as $item) {
+    $data = readJSON($settings['dataFileName']);
+    
+    foreach ($data['data'] as $item) {
         echo '<tr>';
-        echo '<td><a href="' . $item->url . '" target="_blank">' . $item->url . '</a></td>';
-        echo '<td>' . frequencyToText($item->frequency) . '</td>';
-        echo '<td>' . ($item['lastDownload'] != 0 ? date('Y-m-d', $item['lastDownload']) : 'Never') . '</td>';
-        echo '<td><a href="edit.php?id='.$item->id.'">Edit</a></td>';
-        echo '<td><a href="delete.php?id='.$item->id.'">Delete</a></td>';
+        echo '<td><a href="' . $item['url'] . '" target="_blank">' . $item['url'] . '</a></td>';
+        echo '<td>' . frequencyToText($item['frequency']) . '</td>';
+        echo '<td>' . date('Y-m-d', $item['lastDownload']) . '</td>';
+        echo '<td><a href="edit.php?id='.$item['id'].'">Edit</a></td>';
+        echo '<td><a href="delete.php?id='.$item['id'].'">Delete</a></td>';
         echo '</tr>';
     }
 }
@@ -49,7 +49,12 @@ function redirectIndex() {
     exit;
 }
 function readJSON($filename) {
-    $jsonData = file_get_contents($filename);
-    $data = json_decode($jsonData, true);
-    return $data;
+    if(file_exists($filename)) {
+        $jsonData = file_get_contents($filename);
+        $data = json_decode($jsonData, true);
+        return $data;
+    }
+    else {
+        die ("<h1>JSON file not found.</h1>");
+    }
 }
