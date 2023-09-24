@@ -6,8 +6,7 @@
         $url = $_POST["url"];
         $frequency = $_POST["frequency"];
     
-        $jsonData = file_get_contents('job.json');
-        $data = json_decode($jsonData, true);
+        $data = readJSON($settings['dataFileName']);
     
         $newEntry = [
             "id" => ++$data["lastID"], 
@@ -17,9 +16,7 @@
         ];
         
         $data["data"][] = $newEntry;
-    
-        file_put_contents('job.json', json_encode($data, JSON_PRETTY_PRINT));
-        redirectIndex();
+        file_put_contents($settings['dataFileName'], json_encode($data, JSON_PRETTY_PRINT));
     }
 ?>
 <!DOCTYPE html>
@@ -36,7 +33,7 @@
             <p>Playlist URL: <input type="url" name="url" style="width: 450px;"></p>
             <span class="error"><?php echo $urlErr;?></span>
             <br>
-            <p>Check frequency (in hours): <input type="number" name="frequency" min="-1"></p>
+            <p>Check frequency (in hours): <input type="number" name="frequency" min="<?=$frequencyMinValue;?>" max="<?=$settings['maxRefreshTime'];?>"></p>
             <span class="error"><?php echo $frequencyErr;?></span>
             <br><br>
 
