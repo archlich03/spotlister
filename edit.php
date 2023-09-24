@@ -6,9 +6,9 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && empty($urlErr) && empty($frequencyErr)) {
         $id = (int)$_POST["id"];
-    
+
         $data = readJSON($settings['dataFileName']);
-    
+
         $elementKey = null;
         foreach ($data["data"] as $key => $item) {
             if ($item["id"] === $id) {
@@ -16,33 +16,33 @@
                 break;
             }
         }
-    
+
         if ($elementKey !== null) {
             $data["data"][$key]["url"] = $_POST["url"];
             $data["data"][$key]["frequency"] = (int)$_POST["frequency"];
-            
+
             file_put_contents($settings['dataFileName'], json_encode($data, JSON_PRETTY_PRINT));
             redirectIndex();
         } else {
             die ("ID not found");
         }
-        
+
     } 
     elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && empty($urlErr)) {
-        
+
         $id = (int)$_GET["id"];
 
         $data = readJSON($settings['dataFileName']);
-    
+
         $element = null;
-        
+
         foreach ($data["data"] as $item) {
             if ($item["id"] === $id) {
                 $element = $item;
                 break;
             }
         }
-    
+
         if ($element !== null) {
             $url = $element["url"];
             $frequency = $element["frequency"];
@@ -66,7 +66,7 @@
     <div>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
-        
+
             <p>Playlist URL: <input type="url" name="url" style="width: 450px;" value="<?php echo htmlspecialchars($url); ?>"></p>
             <span class="error"><?php echo $urlErr;?></span>
             <br>
