@@ -58,6 +58,7 @@
     <br>
     <a href="add.php">Add New Entry</a>
     <a href="download.php">Download Data</a>
+    <a href="sitemap.html">View Sitemap</a>
     <script>
         function updateTimer() {
             const now = new Date();
