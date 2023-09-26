@@ -37,7 +37,7 @@
             <p>Check frequency (in hours): <input type="number" name="frequency" min="<?=$frequencyMinValue;?>" max="<?=$settings['maxRefreshTime'];?>"></p>
             <span class="error"><?php echo $frequencyErr;?></span>
             <br><br>
-
+            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
             <input class="back" type="button" value="Back" onclick="location.href='index.php'">
             <input type="submit" name="submit" value="Submit">
         </form>
