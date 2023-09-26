@@ -58,3 +58,21 @@ function readJSON($filename) {
         die ("<h1>JSON file not found.</h1>");
     }
 }
+function convertDataToCSV($data) {
+    $csv = "id,url,frequency,lastDownload\n";
+    foreach ($data['data'] as $item) {
+        $csv .= $item['id'] . ',' . $item['url'] . ',' . $item['frequency'] . ',' . date('Y-m-d', $item['lastDownload']) . "\n";
+    }
+    return $csv;
+}
+function convertDataToText($data) {
+    $text = "";
+    foreach ($data['data'] as $item) {
+        $text .= "ID: " . $item['id'] . "\n";
+        $text .= "URL: " . $item['url'] . "\n";
+        $text .= "Frequency: " . frequencyToText($item['frequency']) . "\n";
+        $text .= "Last Download: " . date('Y-m-d', $item['lastDownload']) . "\n";
+        $text .= "------------------------------------\n";
+    }
+    return $text;
+}
