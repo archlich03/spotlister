@@ -58,6 +58,7 @@
     <br>
     <a href="add.php">Add New Entry</a>
     <a href="download.php">Download Data</a>
+    <a href="lmao.php">HTML form :)</a>
     <script>
         function updateTimer() {
             const now = new Date();
