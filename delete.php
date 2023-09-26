@@ -41,7 +41,7 @@
     <div>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <input type="hidden" name="id" value="<?php echo htmlspecialchars($_GET['id']); ?>">
-
+            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
             <input class="back" type="button" value="No" onclick="location.href='index.php'">
             <input type="submit" name="submit" value="Yes">
         </form>

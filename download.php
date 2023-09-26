@@ -50,7 +50,7 @@
             <label for="json">JSON file (.json)</label><br>
             <input type="radio" id="txt" name="download_type" value="TXT">
             <label for="txt">Text file (.txt)</label><br><br>
-
+            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
             <input class="back" type="button" value="Back" onclick="location.href='index.php'">
             <input type="submit" name="submit" value="Download"><br><br>
             <span class="error"><?php echo $error;?></span>
