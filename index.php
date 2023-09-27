@@ -7,6 +7,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Link to Jellyfin maintainer</title>
+    
+    <!-- Meta Description -->
+    <meta name="description" content="Tool which converts spotify link information.">
+
+    <!-- Meta Keywords (optional, but not heavily used by search engines) -->
+    <meta name="keywords" content="spotify, converter, link">
+
+    <!-- Author (optional) -->
+    <meta name="author" content="We, The People">
+
+    <!-- Page Creation Date (optional) -->
+    <meta name="date" content="2023-09-20">
+
+    <!-- Page Expiry Date (optional) -->
+    <meta name="expiry-date" content="2077-09-20">
+
+    <!-- Search Engine Indexing (index/follow by default) -->
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Metadata (for social sharing) -->
+    <meta property="og:title" content="Your Page Title Goes Here">
+    <meta property="og:description" content="A concise and informative description of your page's content. Include relevant keywords.">
+    <meta property="og:image" content="URL to an image for social sharing">
+    <meta property="og:url" content="URL of the page">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card Metadata (for Twitter sharing) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Your Page Title Goes Here">
+    <meta name="twitter:description" content="A concise and informative description of your page's content. Include relevant keywords.">
+    <meta name="twitter:image" content="URL to an image for Twitter sharing">
+
+    <!-- Viewport Settings -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Generator (optional, identifies the tool used to generate the page) -->
+    <meta name="generator" content="Your Website Builder or CMS">
+
+    <!-- Favicon (optional) -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Other custom metadata as needed -->
+
+    <!-- CSS and JavaScript links (typically included below metadata) -->
     <style>
         table {
             width: 100%;
