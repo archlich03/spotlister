@@ -7,8 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Link to Jellyfin maintainer</title>
-    
-    <!-- Meta Description -->
     <meta name="description" content="Tool which converts spotify link information.">
     <meta name="keywords" content="spotify, converter, link">
     <meta name="author" content="We, The People">
