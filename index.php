@@ -59,7 +59,18 @@
     <a href="add.php">Add New Entry</a>
     <a href="download.php">Download Data</a>
     <a href="sitemap.html">View Sitemap</a>
+    <a href="#" id="fetchOutputLink">Fetch Output</a>
+    <br><br>
+    <div id="output"></div>
     <script>
+         function getOutput() {
+            fetch('fetch_output.php')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('output').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
         function updateTimer() {
             const now = new Date();
             const currentMinutes = now.getMinutes();
@@ -73,6 +84,8 @@
             if (remainingMinutes === 0 && remainingSeconds === 0) {
                 clearInterval(timerInterval);
                 document.getElementById('timer').textContent = "00:00:00";
+                getOutput();
+
                 setTimeout(updateTimer, 1000); // Restart the timer
             } else {
                 let countdown = `00:00`;
@@ -83,6 +96,11 @@
                     document.getElementById('timer').textContent = `${formatTime(remainingMinutes+1)}:00`;
             }
         }
+
+        document.getElementById('fetchOutputLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            getOutput();
+        });
 
         // Initial call to set the timer
         updateTimer();
