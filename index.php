@@ -59,7 +59,7 @@
     <a href="add.php">Add New Entry</a>
     <a href="download.php">Download Data</a>
     <a href="sitemap.html">View Sitemap</a>
-    <a href="#" id="fetchOutputLink">Fetch Output</a>
+    <a href="#" id="fetchOutputLink">Refresh playlist</a>
     <br><br>
     <div id="output"></div>
     <script>
