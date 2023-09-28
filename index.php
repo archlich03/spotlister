@@ -66,10 +66,11 @@
     <a href="download.php">Download Data</a>
     <a href="lmao.php">HTML form :)</a>
     <a href="sitemap.html">View Sitemap</a>
+    <a href="#" id="fetchOutputLink">Refresh playlist</a>
     <br><br>
     <div id="output"></div>
     <script>
-        function getOutput() {
+         function getOutput() {
             fetch('fetch_output.php')
                 .then(response => response.text())
                 .then(data => {
@@ -88,12 +89,13 @@
             };
 
             if (remainingMinutes === 0 && remainingSeconds === 0) {
-            clearInterval(timerInterval);
-            document.getElementById('timer').textContent = "00:00:00";
-            getOutput();
+                clearInterval(timerInterval);
+                document.getElementById('timer').textContent = "00:00:00";
+                getOutput();
 
-            setTimeout(updateTimer, 1000); // Restart the timer
-        } else {
+                setTimeout(updateTimer, 1000); // Restart the timer
+            } else {
+
                 let countdown = `00:00`;
                 // `${formatTime(remainingMinutes)}:${formatTime(remainingSeconds)}`;
                 if (remainingSeconds != 60)
@@ -102,6 +104,11 @@
                     document.getElementById('timer').textContent = `${formatTime(remainingMinutes+1)}:00`;
             }
         }
+
+        document.getElementById('fetchOutputLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            getOutput();
+        });
 
         // Initial call to set the timer
         updateTimer();
