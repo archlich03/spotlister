@@ -60,6 +60,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit element</title>
+    <meta name="description" content="Edit playlist/link information.">
+    <meta name="keywords" content="spotify, converter, link">
+    <meta name="author" content="We, The People">
+    <meta name="date" content="2023-09-20">
+    <meta name="expiry-date" content="2077-09-20">
+    <meta name="robots" content="index, follow">
 </head>
 <body>
     <h1>Edit element</h1>
@@ -73,7 +79,7 @@
             <p>Check frequency (in hours): <input type="number" name="frequency" min="<?=$frequencyMinValue;?>" max="<?=$settings['maxRefreshTime']?>" value="<?=htmlspecialchars($frequency);?>"></p>
             <span class="error"><?php echo $frequencyErr;?></span>
             <br><br>
-
+            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
             <input class="back" type="button" value="Back" onclick="location.href='index.php'">
             <input type="submit" name="submit" value="Submit">
         </form>
