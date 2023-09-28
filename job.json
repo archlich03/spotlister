@@ -1,18 +1,12 @@
 {
-    "lastScan": 1694250315,
+    "lastScan": 1695908310,
     "lastID": 1,
     "data": [
         {
             "id": 0,
-            "url": "https:\/\/open.spotify.com\/playlist\/3hCNqiamvgpTIExy0l5jFd",
-            "frequency": 68,
-            "lastDownload": 1694250165
-        },
-        {
-            "id": 1,
-            "url": "https:\/\/open.spotify.com\/playlist\/0sX0phy2pD8qZInHLUE3gC",
-            "frequency": 0,
-            "lastDownload": 1694250315
+            "url": "https://open.spotify.com/playlist/3hCNqiamvgpTIExy0l5jFd",
+            "frequency": 66,
+            "lastDownload": 1695907148
         }
     ]
 }
