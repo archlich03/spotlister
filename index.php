@@ -7,6 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Link to Jellyfin maintainer</title>
+    <meta name="description" content="Tool which converts spotify link information.">
+    <meta name="keywords" content="spotify, converter, link">
+    <meta name="author" content="We, The People">
+    <meta name="date" content="2023-09-20">
+    <meta name="expiry-date" content="2077-09-20">
+    <meta name="robots" content="index, follow">
     <style>
         table {
             width: 100%;
@@ -58,6 +64,7 @@
     <br>
     <a href="add.php">Add New Entry</a>
     <a href="download.php">Download Data</a>
+    <a href="lmao.php">HTML form :)</a>
     <a href="sitemap.html">View Sitemap</a>
     <a href="#" id="fetchOutputLink">Refresh playlist</a>
     <br><br>
@@ -88,6 +95,7 @@
 
                 setTimeout(updateTimer, 1000); // Restart the timer
             } else {
+
                 let countdown = `00:00`;
                 // `${formatTime(remainingMinutes)}:${formatTime(remainingSeconds)}`;
                 if (remainingSeconds != 60)
