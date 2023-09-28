@@ -39,6 +39,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download data</title>
+    <link rel="stylesheet" href="style.css?<?=date('U')?>">
     <meta name="description" content="Download page for existing data.">
     <meta name="keywords" content="spotify, converter, link">
     <meta name="author" content="We, The People">
@@ -47,20 +48,30 @@
     <meta name="robots" content="index, follow">
 </head>
 <body>
-    <h1>Download data</h1>
-    <div>
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-            <input type="radio" id="csv" name="download_type" value="CSV">
-            <label for="csv">CSV file (.csv)</label><br>
-            <input type="radio" id="json" name="download_type" value="JSON">
-            <label for="json">JSON file (.json)</label><br>
-            <input type="radio" id="txt" name="download_type" value="TXT">
-            <label for="txt">Text file (.txt)</label><br><br>
-            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-            <input class="back" type="button" value="Back" onclick="location.href='index.php'">
-            <input type="submit" name="submit" value="Download"><br><br>
-            <span class="error"><?php echo $error;?></span>
-        </form>
+    <?php
+        require 'template/header.html';
+        require 'template/sidebar.html';
+    ?>
+    <div id='content'>
+        <div id="output"></div>
+        <h1>Download data</h1>
+        <div>
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <input type="radio" id="csv" name="download_type" value="CSV">
+                <label for="csv">CSV file (.csv)</label><br>
+                <input type="radio" id="json" name="download_type" value="JSON">
+                <label for="json">JSON file (.json)</label><br>
+                <input type="radio" id="txt" name="download_type" value="TXT">
+                <label for="txt">Text file (.txt)</label><br><br>
+                <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+                <input class="back" type="button" value="Back" onclick="location.href='index.php'">
+                <input type="submit" name="submit" value="Download"><br><br>
+                <span class="error"><?php echo $error;?></span>
+            </form>
+        </div>
+    <?php
+        require 'template/footer.php';
+    ?>
     </div>
 </body>
 
