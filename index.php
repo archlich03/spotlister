@@ -64,6 +64,7 @@
     <br>
     <a href="add.php">Add New Entry</a>
     <a href="download.php">Download Data</a>
+    <a href="lmao.php">HTML form :)</a>
     <a href="sitemap.html">View Sitemap</a>
     <script>
         function updateTimer() {
