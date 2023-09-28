@@ -22,6 +22,7 @@
                 <li><a href='add.php'>Add media</a></li>
                 <li><a href='download.php'>Download configuration</a></li>
                 <li><a href='lmao.php'>All HTML form inputs</a></li>
+                <li><a href='pics.php'>Picture</a></li>
             </ul>
         <?php
             require 'template/footer.php';
