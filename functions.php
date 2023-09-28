@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require 'conf.php';
+require 'csrf_protection.php';
 
 function displayJSONDataToTable() {
     global $settings;
@@ -15,7 +16,7 @@ function displayJSONDataToTable() {
         echo '<tr>';
         echo '<td><a href="' . $item['url'] . '" target="_blank">' . $item['url'] . '</a></td>';
         echo '<td>' . frequencyToText($item['frequency']) . '</td>';
-        echo '<td>' . date('Y-m-d', $item['lastDownload']) . '</td>';
+        echo '<td>' . ($item['lastDownload'] != 0 ? date('Y-m-d', $item['lastDownload']) : 'Never') . '</td>';
         echo '<td><a href="edit.php?id='.$item['id'].'">Edit</a></td>';
         echo '<td><a href="delete.php?id='.$item['id'].'">Delete</a></td>';
         echo '</tr>';
@@ -55,6 +56,29 @@ function readJSON($filename) {
         return $data;
     }
     else {
-        die ("<h1>JSON file not found.</h1>");
+        $data = ["lastScan" => 0, "lastID" => 0, "data" => []];
+
+        $jsonData = json_encode($data, JSON_PRETTY_PRINT);
+        file_put_contents($filename, $jsonData);
+        return $data;
+        
     }
+}
+function convertDataToCSV($data) {
+    $csv = "id,url,frequency,lastDownload\n";
+    foreach ($data['data'] as $item) {
+        $csv .= $item['id'] . ',' . $item['url'] . ',' . $item['frequency'] . ',' . date('Y-m-d', $item['lastDownload']) . "\n";
+    }
+    return $csv;
+}
+function convertDataToText($data) {
+    $text = "";
+    foreach ($data['data'] as $item) {
+        $text .= "ID: " . $item['id'] . "\n";
+        $text .= "URL: " . $item['url'] . "\n";
+        $text .= "Frequency: " . frequencyToText($item['frequency']) . "\n";
+        $text .= "Last Download: " . date('Y-m-d', $item['lastDownload']) . "\n";
+        $text .= "------------------------------------\n";
+    }
+    return $text;
 }
