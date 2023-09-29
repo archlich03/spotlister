@@ -87,7 +87,7 @@
             <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
             <input class="back" type="button" value="Back" onclick="location.href='index.php'">
             <input type="submit" name="submit" value="Submit">
-        </form>
+        </form><br>
         <div id="output"></div>
         <?php
             require 'template/footer.php';
