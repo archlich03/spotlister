@@ -15,7 +15,6 @@
             require 'template/sidebar.html';
         ?>
         <div id='content'>
-            <div id="output"></div>
             <h1>Here's all the available pages to be visited on this website:</h1>
             <ul>
                 <li><a href='index.php'>Main page</a></li>
@@ -24,9 +23,10 @@
                 <li><a href='lmao.php'>All HTML form inputs</a></li>
                 <li><a href='pics.php'>Picture</a></li>
             </ul>
-        <?php
-            require 'template/footer.php';
-        ?>
-    </div>
+            <div id="output"></div>
+            <?php
+                require 'template/footer.php';
+            ?>
+        </div>
     </body>
 </html>

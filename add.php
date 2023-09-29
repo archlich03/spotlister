@@ -40,7 +40,6 @@
         require 'template/sidebar.html';
     ?>
     <div id='content'>
-        <div id="output"></div>
         <h1>Add an element</h1>
         <div>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -55,9 +54,10 @@
                 <input type="submit" name="submit" value="Submit">
             </form>
         </div>
-    <?php
-        require 'template/footer.php';
-    ?>
+        <div id="output"></div>
+        <?php
+            require 'template/footer.php';
+        ?>
     </div>
 </body>
 
