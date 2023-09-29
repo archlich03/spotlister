@@ -49,7 +49,6 @@
         require 'template/sidebar.html';
     ?>
     <div id='content'>
-        <div id="output"></div>
         <h1>Are you sure you want to delete this element?</h1>
         <div>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -59,9 +58,10 @@
                 <input type="submit" name="submit" value="Yes">
             </form>
         </div>
-    <?php
-        require 'template/footer.php';
-    ?>
+        <div id="output"></div>
+        <?php
+            require 'template/footer.php';
+        ?>
     </div>
 </body>
 

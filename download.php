@@ -53,7 +53,6 @@
         require 'template/sidebar.html';
     ?>
     <div id='content'>
-        <div id="output"></div>
         <h1>Download data</h1>
         <div>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -69,9 +68,10 @@
                 <span class="error"><?php echo $error;?></span>
             </form>
         </div>
-    <?php
-        require 'template/footer.php';
-    ?>
+        <div id="output"></div>
+        <?php
+            require 'template/footer.php';
+        ?>
     </div>
 </body>
 

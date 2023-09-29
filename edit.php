@@ -74,9 +74,7 @@
         require 'template/sidebar.html';
     ?>
     <div id='content'>
-        <div id="output"></div>
         <h1>Edit element</h1>
-    <div>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
 
@@ -89,10 +87,11 @@
             <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
             <input class="back" type="button" value="Back" onclick="location.href='index.php'">
             <input type="submit" name="submit" value="Submit">
-        </form>
-    <?php
-        require 'template/footer.php';
-    ?>
+        </form><br>
+        <div id="output"></div>
+        <?php
+            require 'template/footer.php';
+        ?>
     </div>
 </body>
 

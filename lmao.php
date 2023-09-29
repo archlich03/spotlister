@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require 'template/sidebar.html';
     ?>
     <div id='content'>
-        <div id="output"></div>
         <h1>A HTML form of all types!</h1>
         <form action="#" method="post">
             <label for="text">Text Input:</label>
@@ -94,9 +93,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="datetime-local">Datetime-Local Input:</label>
             <input type="datetime-local" id="datetime-local" name="datetime-local"><br><br>
         </form>
-    <?php
-        require 'template/footer.php';
-    ?>
+        <div id="output"></div>
+        <?php
+            require 'template/footer.php';
+        ?>
     </div>
 </body>
 </html>
