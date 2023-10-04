@@ -36,6 +36,7 @@
                 ?>
             </tbody>
         </table>
+        <div id="refreshStart"></div>
         <div id="output"></div>
         <br><br>
         <?php
