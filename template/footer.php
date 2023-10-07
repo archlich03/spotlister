@@ -24,6 +24,7 @@
             if (remainingMinutes === 0 && remainingSeconds === 0) {
                 clearInterval(timerInterval);
                 document.getElementById('timer').textContent = "00:00:00";
+                document.getElementById('refreshStart').textContent = "Refresh started. Do not interrupt this process.";
                 getOutput();
 
                 setTimeout(updateTimer, 1000);
@@ -39,6 +40,7 @@
 
     document.getElementById('fetchOutputLink').addEventListener('click', function (event) {
         event.preventDefault();
+        document.getElementById('refreshStart').textContent = "Refresh started. Do not interrupt this process.";
         getOutput();
     });
 
