@@ -1,5 +1,5 @@
 <div id="footer">
-    &copy; <?=date('Y')?> Rokas ir Benas; For any inquiries, please contact <a href="mailto:webmaster@rokascyber.lt">webmaster@rokascyber.lt</a>
+    &copy; <?=date('Y')?> Rokas, Benas, Justė ir Laurynas; For any inquiries, please contact <a href="mailto:webmaster@rokascyber.lt">webmaster@rokascyber.lt</a>
 </div>
 <script>
     function getOutput() {
