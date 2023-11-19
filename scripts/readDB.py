@@ -4,29 +4,30 @@ import mysql.connector
 import re
 
 def get_last_scan(cursor):
-    cursor.execute("SELECT lastScan FROM scanData")
-    return cursor.fetchall()
+    cursor.execute("SELECT lastScan FROM ScanData")
+    result = cursor.fetchone()
+    
+    if result is None:
+        cursor.execute("INSERT INTO ScanData (lastScan) VALUES (%s)", (int(time.time()),))
+        cursor.execute("SELECT lastScan FROM ScanData")
+        result = cursor.fetchone()
+        
+    return result
 
 
 def initialize_database():
-    with open('conf.php', 'r') as conf_file:
-        conf_content = conf_file.read()
-    
-    host_match = re.search(r"\$settings\['serverName'\]\s*=\s*'([^']+)'", conf_content)
-    user_match = re.search(r"\$settings\['userName'\]\s*=\s*'([^']+)'", conf_content)
-    password_match = re.search(r"\$settings\['password'\]\s*=\s*'([^']+)'", conf_content)
-    db_name_match = re.search(r"\$settings\['dbName'\]\s*=\s*'([^']+)'", conf_content)
-
     conn = mysql.connector.connect(
-        host=host_match.group(1),
-        user=user_match.group(1),
-        password=password_match.group(1),
-        database=db_name_match.group(1)
+        host= "localhost",
+        user="spotlister",
+        password="test",
+        database="spotlister"
     )
     return conn
-def process_playlists(cursor):
+def process_playlists(cursor, conn, last_scan):
     timestamp = time.time()
     print(f"[{timestamp}] Beginning the reading of all inserted entries.")
+
+    cursor.fetchall()
 
     cursor.execute("SELECT * FROM Playlists")
     playlists = cursor.fetchall()
@@ -48,7 +49,7 @@ def process_playlists(cursor):
             else:
                 print(f"[{timestamp}] Skipping {url} due to the refresh time coming later.")
 
-    cursor.execute("INSERT INTO scanData (lastScan) VALUES (%s)", (int(time.time()),))
+    cursor.execute("UPDATE ScanData SET lastScan = %s", (int(time.time()),))
     conn.commit()
 
     print(f"[{timestamp}] Finished reading all inserted entries.")
@@ -56,9 +57,9 @@ def main():
     conn = initialize_database()
     cursor = conn.cursor()
     
-    last_scan = get_last_scan(cursor)
+    last_scan = get_last_scan(cursor)[0]
 
-    process_playlists(cursor)
+    process_playlists(cursor, conn, last_scan)
 
     cursor.close()
     conn.close()

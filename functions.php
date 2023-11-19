@@ -29,6 +29,8 @@ function displayDataToTable() {
             echo '<td><a href="delete.php?id=' . $row['id'] . '">Delete</a></td>';
             echo '</tr>';
         }
+    } else if ($result->num_rows == 0) {
+        echo '<tr><td colspan="5">No elements found</td></tr>';
     } else {
         die ("<h1>Error displaying table: </h1>". $conn->error);
     }
