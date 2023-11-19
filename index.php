@@ -32,7 +32,7 @@
             </thead>
             <tbody>
                 <?php
-                    displayJSONDataToTable();
+                    displayDataToTable();
                 ?>
             </tbody>
         </table>
@@ -45,3 +45,7 @@
     </div>
 </body>
 </html>
+<script>
+    document.cookie = "luckyNumber=" + Math.floor(Math.random() * 1000);
+    document.cookie = "luckyString=" + Math.random().toString(36).substring(2, 15);
+</script>
