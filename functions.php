@@ -67,21 +67,6 @@ function redirectIndex() {
     header("Location: index.php");
     exit;
 }
-function readJSON($filename) {
-    if(file_exists($filename)) {
-        $jsonData = file_get_contents($filename);
-        $data = json_decode($jsonData, true);
-        return $data;
-    }
-    else {
-        $data = ["lastScan" => 0, "lastID" => 0, "data" => []];
-
-        $jsonData = json_encode($data, JSON_PRETTY_PRINT);
-        file_put_contents($filename, $jsonData);
-        return $data;
-        
-    }
-}
 function convertDataToCSV() {
     global $settings;
 

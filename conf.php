@@ -6,7 +6,6 @@ $settings = array();
 // $settings['varName'] = value
 
 // Critical settings
-// $settings['dataFileName'] = "job.json"; // name of the JSON file (deprecated)
 
 // Database settings
 $settings['serverName'] = "localhost"; // name of the DB server
