@@ -6,7 +6,13 @@ $settings = array();
 // $settings['varName'] = value
 
 // Critical settings
-$settings['dataFileName'] = "job.json"; // name of the JSON file
+// $settings['dataFileName'] = "job.json"; // name of the JSON file (deprecated)
+
+// Database settings
+$settings['serverName'] = "localhost"; // name of the DB server
+$settings['userName'] = "spotlister"; // name of the DB user
+$settings['password'] = "test"; // password of the DB user
+$settings['dbName'] = "spotlister"; // name of the DB
 
 // Non-critical settings
 $settings['allowOneTimeImport'] = true; // allow importing media from a link only once.
