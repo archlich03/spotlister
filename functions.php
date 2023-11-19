@@ -82,21 +82,70 @@ function readJSON($filename) {
         
     }
 }
-function convertDataToCSV($data) {
+function convertDataToCSV() {
+    global $settings;
+
     $csv = "id,url,frequency,lastDownload\n";
-    foreach ($data['data'] as $item) {
-        $csv .= $item['id'] . ',' . $item['url'] . ',' . $item['frequency'] . ',' . date('Y-m-d', $item['lastDownload']) . "\n";
+    $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
+
+    $sql = "SELECT id, url, frequency, lastDownload FROM Playlists";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $csv .= $row['id'] . ',' . $row['url'] . ',' . $row['frequency'] . ',' . date('Y-m-d', $row['lastDownload']) . "\n";
+        }
+    }
+
+    $conn->close();
     return $csv;
 }
-function convertDataToText($data) {
+function convertDataToText() {
     $text = "";
-    foreach ($data['data'] as $item) {
-        $text .= "ID: " . $item['id'] . "\n";
-        $text .= "URL: " . $item['url'] . "\n";
-        $text .= "Frequency: " . frequencyToText($item['frequency']) . "\n";
-        $text .= "Last Download: " . date('Y-m-d', $item['lastDownload']) . "\n";
-        $text .= "------------------------------------\n";
+    global $settings;
+
+    $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
+
+    $sql = "SELECT id, url, frequency, lastDownload FROM Playlists";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $text .= "ID: " . $row['id'] . "\n";
+            $text .= "URL: " . $row['url'] . "\n";
+            $text .= "Frequency: " . frequencyToText($row['frequency']) . "\n";
+            $text .= "Last Download: " . date('Y-m-d', $row['lastDownload']) . "\n";
+            $text .= "------------------------------------\n";
+        }
+    }
+
+    $conn->close();
     return $text;
+}
+function convertDataToJSON(){
+    global $settings;
+
+    $json = [];
+
+    $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT id, url, frequency, lastDownload FROM Playlists";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $json[] = $row;
+        }
+    }
+    $conn->close();
+    return json_encode($json);
 }
