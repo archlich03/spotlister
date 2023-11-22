@@ -37,6 +37,30 @@ function displayDataToTable() {
 
     closeConn($stmt, $conn);
 }
+function displayUsersToTable() {
+    $conn = startConn();
+
+    $stmt = $conn->prepare("SELECT id, username, approved FROM Users");
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0 && checkPriv() > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo '<tr>';
+            echo '<td>' . $row['id'] . '</td>';
+            echo '<td>' . $row['username'] . '</td>';
+            echo '<td>' . numberToPriv($row['approved']) . '</td>';
+            echo '<td><a href="edit.php?id=' . $row['id'] . '">Edit</a></td>';
+            echo '</tr>';
+        }
+    } else {
+        echo '<p>No users found.</p>';
+    }
+
+    closeConn($stmt, $conn);
+}
+
 
 function closeConn($stmt, $conn){
     $stmt->close();
@@ -57,6 +81,16 @@ function frequencyToText($frequency) {
         else
             $answer = "$hours h";
     }
+    return $answer;
+}
+function numberToPriv($priv) {
+    $answer = '';
+    if ($priv == 0)
+        $answer = "User";
+    elseif ($priv == 1)
+        $answer = "Moderator";
+    else
+        $answer = "Admin";
     return $answer;
 }
 function testInput($data) {
