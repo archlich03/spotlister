@@ -222,21 +222,27 @@ function startConn(){
 
 function checkPriv(){
     $conn = startConn();
-    $userId = testInput($_SESSION['userId']);
-
-
-    $stmt = $conn->prepare("SELECT approved FROM Users WHERE id = ?");
-    $stmt->bind_param("i", $userId);
-    $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($approved);
-        $stmt->fetch();
-        return $approved;
-    } else {
+    if(!isset($_SESSION['userId'])) {
         return false;
     }
+    else{
+        $userId = testInput($_SESSION['userId']);
+
+
+        $stmt = $conn->prepare("SELECT approved FROM Users WHERE id = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $stmt->store_result();
+    
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($approved);
+            $stmt->fetch();
+            return $approved;
+        } else {
+            return false;
+        }
+    }
+    
 }
 function checkSession(){
     if(!isset($_SESSION['userId']) || checkPriv() == false){
