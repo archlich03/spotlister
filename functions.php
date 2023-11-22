@@ -200,7 +200,6 @@ function checkPriv(){
         return false;
     }
 }
-
 function checkSession(){
     if(!isset($_SESSION['userId']) || checkPriv() == false){
         redirectIndex();

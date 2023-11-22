@@ -1,12 +1,13 @@
 <?php
     require 'functions.php';
+    require 'captcha.php';
     if (checkPriv() > 0) {
         redirectIndex();
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $validationResult = validateRegister($_POST["username"], $_POST["password"]);
-        if ($validationResult === true){
+        if ($validationResult === true && $captcha->verify()) {
             $username = $_POST["username"];
             $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
@@ -93,6 +94,16 @@
         text-align: center;
         margin-top: 15px;
     }
+
+    .captcha-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .captcha-image {
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
 </style>
 <body>
 <main>
@@ -100,11 +111,18 @@
         <h1>Sign Up</h1>
         <div>
             <label for="username">Username:</label>
-            <input type="text" name="username" id="username">
+            <input type="text" name="username" id="username" required>
         </div>
         <div>
             <label for="password">Password:</label>
-            <input type="password" name="password" id="password">
+            <input type="password" name="password" id="password" required>
+        </div>
+        <div class="captcha-container">
+            <div class="captcha-image">
+                <label for="captcha">Enter the Captcha:</label>
+                <img src="captcha_image.php" alt="Captcha Image">
+            </div>
+            <input type="text" id="captcha" name="captcha" required>
         </div>
         <button type="submit" name="register">Register</button>
         <span class="error"><?php echo isset($error) ? $error : ''; ?></span>
