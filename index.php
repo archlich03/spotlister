@@ -48,5 +48,5 @@
 <script>
     document.cookie = "luckyNumber=" + Math.random();
     document.cookie = "luckyString=" + Math.random().toString(36).substring(2, 15);
-    document.cookie = "luckyFact=i am your father";
+    document.cookie = "luckyFact=joe momma";
 </script>
