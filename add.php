@@ -6,18 +6,28 @@
         $url = $_POST["url"];
         $frequency = $_POST["frequency"];
     
-        $data = readJSON($settings['dataFileName']);
-    
-        $newEntry = [
-            "id" => ++$data["lastID"], 
-            "url" => $url,
-            "frequency" => (int)$frequency,
-            "lastDownload" => 0,
-        ];
+        $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $sql = "INSERT INTO Playlists (url, frequency, lastDownload) VALUES (?, ?, 0)";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $url, $frequency);
+        $stmt->execute();
+
+        if ($stmt->errno) {
+            closeConn($stmt, $conn);
+            die("Error: " . $stmt->error);
+        } else {
+            echo "New record created successfully";
+            closeConn($stmt, $conn);
+            redirectIndex();
+        }
+
         
-        $data["data"][] = $newEntry;
-        file_put_contents($settings['dataFileName'], json_encode($data, JSON_PRETTY_PRINT));
-        redirectIndex();
     }
 ?>
 <!DOCTYPE html>

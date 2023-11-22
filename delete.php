@@ -7,27 +7,27 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         $id = (int)$_POST["id"];
         testInput($id);
-        $data = readJSON('job.json');
-
-        $elementKey = null;
-        foreach ($data["data"] as $key => $item) {
-            if ($item["id"] === $id) {
-                $elementKey = $key;
-                break;
-            }
+        $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
+    
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
         }
     
-        if ($elementKey !== null) {
-            array_splice($data["data"], $elementKey, 1);
-
-            file_put_contents('job.json', json_encode($data, JSON_PRETTY_PRINT));
-
-            redirectIndex();
+        $stmt = $conn->prepare("DELETE FROM Playlists WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+    
+        if ($stmt->errno) {
+            closeConn($stmt, $conn);
+            die("Error: " . $stmt->error);
         } else {
-            die ("<h1>Invalid request.</h1><br>Element with id $id doesn't exist.");
+            echo "Record deleted successfully";
+            closeConn($stmt, $conn);
+            redirectIndex();
         }
-        
-    } 
+    } else {
+        $error_message = "<h1>Invalid request.</h1><br>Element with id $id doesn't exist.";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,13 +43,19 @@
     <meta name="expiry-date" content="2077-09-20">
     <meta name="robots" content="index, follow">
 </head>
+<style>
+    #content{
+        margin-left: 210px;
+        margin-top: -8px;
+    }
+</style>
 <body>
     <?php
         require 'template/header.html';
         require 'template/sidebar.html';
     ?>
     <div id='content'>
-        <h1>Are you sure you want to delete this element?</h1>
+        <h1 id='title'>Are you sure you want to delete this element?</h1>
         <div>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($_GET['id']); ?>">

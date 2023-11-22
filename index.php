@@ -32,7 +32,7 @@
             </thead>
             <tbody>
                 <?php
-                    displayJSONDataToTable();
+                    displayDataToTable();
                 ?>
             </tbody>
         </table>
