@@ -2,6 +2,10 @@
     require 'functions.php';
     require 'validate.php';
 
+    // TODO: add login/register buttons, admin panel, change allowed bool to
+    // 0 - unallowed, 1 - allowed, 2 - admin
+    // add test class
+
     $id = $url = $frequency = "";
 
     $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
@@ -11,10 +15,11 @@
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && empty($urlErr) && empty($frequencyErr)) {
-        $id = (int)$_POST["id"];
+        $id = testInput((int)$_POST["id"]);
+        $userId = testInput($_SESSION['userId']);
 
-        $stmt = $conn->prepare("UPDATE Playlists SET url = ?, frequency = ? WHERE id = ?");
-        $stmt->bind_param("sii", $_POST["url"], $_POST["frequency"], $id);
+        $stmt = $conn->prepare("UPDATE Playlists SET url = ?, frequency = ? WHERE id = ? AND user_id = ?");
+        $stmt->bind_param("siii", $url, $frequency, $id, $user_id);
         $stmt->execute();
 
         if ($stmt->errno) {
@@ -29,10 +34,11 @@
     } 
     elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && empty($urlErr)) {
 
-        $id = (int)$_GET["id"];
+        $id = testInput((int)$_GET["id"]);
+        $userId = testInput($_SESSION['userId']);
 
-        $stmt = $conn->prepare("SELECT url, frequency FROM Playlists WHERE id = ?");
-        $stmt->bind_param("i", $id);
+        $stmt = $conn->prepare("SELECT url, frequency FROM Playlists WHERE id = ? AND user_id = ?");
+        $stmt->bind_param("ii", $id, $user_id);
         $stmt->execute();
 
         $stmt->bind_result($url, $frequency);

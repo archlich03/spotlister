@@ -5,16 +5,17 @@
     $id = $url = $frequency = "";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
-        $id = (int)$_POST["id"];
-        testInput($id);
+        $userId = testInput($_SESSION['userId']);
+        $id = testInput((int)$_POST["id"]);
+        
         $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
     
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
     
-        $stmt = $conn->prepare("DELETE FROM Playlists WHERE id = ?");
-        $stmt->bind_param("i", $id);
+        $stmt = $conn->prepare("DELETE FROM Playlists WHERE id = ? AND user_id = ?");
+        $stmt->bind_param("ii", $id, $userId);
         $stmt->execute();
     
         if ($stmt->errno) {
