@@ -18,7 +18,7 @@ function displayDataToTable() {
 
     $result = $stmt->get_result();
     
-    if ($result->num_rows > 0) {
+    if ($result->num_rows > 0 && checkPriv() > 0) {
         while ($row = $result->fetch_assoc()) {
             echo '<tr>';
             echo '<td><a href="' . $row['url'] . '" target="_blank">' . $row['url'] . '</a></td>';
@@ -28,8 +28,8 @@ function displayDataToTable() {
             echo '<td><a href="delete.php?id=' . $row['id'] . '">Delete</a></td>';
             echo '</tr>';
         }
-    } else if ($result->num_rows == 0) {
-        echo '<tr><td colspan="5">No elements found</td></tr>';
+    } else if ($result->num_rows == 0 || checkPriv() == 0) {
+        echo '<tr><td colspan="5">No elements found. Please login first.</td></tr>';
     } else {
         die ("<h1>Error displaying table: </h1>". $conn->error);
     }

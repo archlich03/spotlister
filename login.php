@@ -1,6 +1,6 @@
 <?php
     require 'functions.php';
-    if(session_status() == PHP_SESSION_ACTIVE){
+    if (checkPriv() > 0) {
         redirectIndex();
     }
 
@@ -26,8 +26,7 @@
 
                     $_SESSION['userId'] = testInput($userId);
                     $_SESSION['username'] = testInput($dbUsername);
-                    header("Location: index.php");
-                    exit();
+                    redirectIndex();
                 } else {
                     $error = "User not found!";
                 }

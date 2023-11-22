@@ -1,6 +1,6 @@
 <?php
     require 'functions.php';
-    if(session_status() == PHP_SESSION_ACTIVE){
+    if (checkPriv() > 0) {
         redirectIndex();
     }
 
@@ -23,8 +23,7 @@
             } else {
                 echo "New record created successfully";
                 closeConn($stmt, $conn);
-                header("Location: login.php");
-                exit();
+                redirectIndex();
             }
         }
         else {
