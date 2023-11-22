@@ -1,10 +1,11 @@
 <?php
     require 'functions.php';
+    checkSession();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $validationResult = validateRegister($_POST["username"], $_POST["password"]);
         if ($validationResult === true){
-            $username = $_POST["username"]; // is validateRegister, validationResult
+            $username = $_POST["username"];
             $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
             $conn = startConn();

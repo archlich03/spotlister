@@ -1,3 +1,7 @@
+<?php
+    require 'functions.php';
+    checkSession();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,8 +18,8 @@
 </head>
 <body>
     <?php
-        require 'template/header.html';
-        require 'template/sidebar.html';
+        require 'template/header.php';
+        require 'template/sidebar.php';
     ?>
     <div id='content'>
         <div class="gallery">

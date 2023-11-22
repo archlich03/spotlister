@@ -1,6 +1,7 @@
 <?php
     require 'functions.php';
 
+    checkSession();
     $error = "";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -56,8 +57,8 @@
 </style>
 <body>
     <?php
-        require 'template/header.html';
-        require 'template/sidebar.html';
+        require 'template/header.php';
+        require 'template/sidebar.php';
     ?>
     <div id='content'>
         <h1 id="title">Download data</h1>

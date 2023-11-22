@@ -1,6 +1,7 @@
 <?php
     require 'functions.php';
     require 'validate.php';
+    checkSession();
 
     // TODO: add login/register buttons, admin panel, change allowed bool to
     // 0 - unallowed, 1 - allowed, 2 - admin
@@ -73,8 +74,8 @@
 </style>
 <body>
     <?php
-        require 'template/header.html';
-        require 'template/sidebar.html';
+        require 'template/header.php';
+        require 'template/sidebar.php';
     ?>
     <div id='content'>
         <h1 id='title'>Edit element</h1>

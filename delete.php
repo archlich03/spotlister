@@ -1,6 +1,7 @@
 <?php
     require 'functions.php';
     require 'validate.php';
+    checkSession();
 
     $id = $url = $frequency = "";
 
@@ -48,8 +49,8 @@
 </style>
 <body>
     <?php
-        require 'template/header.html';
-        require 'template/sidebar.html';
+        require 'template/header.php';
+        require 'template/sidebar.php';
     ?>
     <div id='content'>
         <h1 id='title'>Are you sure you want to delete this element?</h1>

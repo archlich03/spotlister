@@ -1,6 +1,7 @@
 <?php
 
 require 'conf.php';
+require 'functions.php';
 
 function setupDB() {
     global $settings;
@@ -39,4 +40,6 @@ function setupDB() {
     }
     $conn->close();
 }
+
+setupDB();
 ?>

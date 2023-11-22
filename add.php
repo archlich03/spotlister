@@ -2,7 +2,7 @@
     require 'functions.php';
     require 'validate.php';
 
-    
+    checkSession();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($urlErr) && empty($frequencyErr)) {
         $userId = testInput($_SESSION['userId']);
@@ -49,8 +49,8 @@
 </style>
 <body>
     <?php
-        require 'template/header.html';
-        require 'template/sidebar.html';
+        require 'template/header.php';
+        require 'template/sidebar.php';
     ?>
     <div id='content'>
         <h1 id='title'>Add an element</h1>

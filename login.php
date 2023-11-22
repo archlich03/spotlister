@@ -1,7 +1,8 @@
 <?php
     require 'functions.php';
+    checkSession();
 
-    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["login"])) {
         $validationResult = validateLogin($_GET["username"], $_GET["password"]);
         if ($validationResult === true){
             $username = $_GET["username"];
@@ -9,24 +10,24 @@
 
             $conn = startConn();
 
-            $stmt = $conn->prepare("SELECT id, username, password FROM Users WHERE username = ?");
+            $stmt = $conn->prepare("SELECT id, username, password, approved FROM Users WHERE username = ?");
             $stmt->bind_param("s", $username);
             $stmt->execute();
             $stmt->store_result();
 
             if ($stmt->num_rows > 0) {
-                $stmt->bind_result($userId, $dbUsername, $dbPassword);
+                $stmt->bind_result($userId, $dbUsername, $dbPassword, $approved);
                 $stmt->fetch();
 
-                if (password_verify($password, $dbPassword)) {
+                if (password_verify($password, $dbPassword) && $approved > 0) {
                     session_start();
 
-                    testInput($_SESSION['userId']) = $userId;
-                    testInput($_SESSION['username']) = $dbUsername;
+                    $_SESSION['userId'] = testInput($userId);
+                    $_SESSION['username'] = testInput($dbUsername);
                     header("Location: index.php");
                     exit();
                 } else {
-                    $error = "Incorrect password!";
+                    $error = "User not found!";
                 }
             } else {
                 $error = "User not found!";
