@@ -16,8 +16,11 @@ function displayDataToTable() {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM Playlists";
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("SELECT * FROM Playlists WHERE user_id = ?");
+    $stmt->bind_param("i", $_SESSION['userId']);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
     
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -35,7 +38,7 @@ function displayDataToTable() {
         die ("<h1>Error displaying table: </h1>". $conn->error);
     }
 
-    $conn->close();
+    closeConn($stmt, $conn);
 }
 
 function closeConn($stmt, $conn){
@@ -135,4 +138,38 @@ function convertDataToJSON(){
     }
     $conn->close();
     return json_encode($json);
+}
+
+function validateRegister($username, $password){
+    $username = testInput($username);
+    $password = testInput($password);
+
+    switch ($password){
+        case strlen($username)==0: // perkelt
+            return "Username cannot be empty";
+        case !strlen($password)>8: // iki 64
+            return "Password must be at least 8 characters long";
+        case !preg_match('/[A-Z]/', $password)
+            || !preg_match('/[a-z]/', $password)
+            || !preg_match('/[0-9]/', $password)
+            || !preg_match('/[^A-Za-z0-9]/', $password):
+            return "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character";
+        default:
+            return true;
+    }
+
+}
+function validateLogin($username, $password){
+    $username = testInput($username);
+    $password = testInput($password);
+
+    switch ($password){
+        case strlen($username)==0:
+            return "Username cannot be empty";
+        case strlen($password)==0:
+            return "Password cannot be empty";
+        default:
+            return true;
+    }
+
 }
