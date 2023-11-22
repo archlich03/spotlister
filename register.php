@@ -5,31 +5,41 @@
         redirectIndex();
     }
 
+    // TODO: admin panel
+
+    $captcha = new Captcha();
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $validationResult = validateRegister($_POST["username"], $_POST["password"]);
-        if ($validationResult === true && $captcha->verify()) {
-            $username = $_POST["username"];
-            $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-
-            $conn = startConn();
-            
-            $approved = 0;
-            $stmt = $conn->prepare("INSERT INTO Users (username, password, approved) VALUES (?, ?, ?)");
-            $stmt->bind_param("ssi", $username, $password, $approved);
-            $stmt->execute();
-
-            if ($stmt->errno) {
-                closeConn($stmt, $conn);
-                die("Error: " . $stmt->error);
+        $userInput = strtoupper($_POST["captcha"]);
+        $captchaText = strtoupper($_SESSION['captcha']);
+        
+        if ($captcha->verify($userInput, $captchaText)){
+            if ($validationResult === true) {
+                $username = $_POST["username"];
+                $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    
+                $conn = startConn();
+                
+                $approved = 0;
+                $stmt = $conn->prepare("INSERT INTO Users (username, password, approved) VALUES (?, ?, ?)");
+                $stmt->bind_param("ssi", $username, $password, $approved);
+                $stmt->execute();
+    
+                if ($stmt->errno) {
+                    closeConn($stmt, $conn);
+                    die("Error: " . $stmt->error);
+                } else {
+                    closeConn($stmt, $conn);
+                    redirectIndex();
+                }
             } else {
-                echo "New record created successfully";
-                closeConn($stmt, $conn);
-                redirectIndex();
+                $error = $validationResult;
             }
+        } else {
+            $error = "Wrong captcha. Please try again.";
         }
-        else {
-            $error = $validationResult;
-        }
+        
     }
     
 ?>

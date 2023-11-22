@@ -1,7 +1,7 @@
 <?php
     class Captcha {
         function generateString(){
-            $length = 6;
+            $length = 5;
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $randomString = '';
             for ($i = 0; $i < $length; $i++) {
@@ -10,10 +10,7 @@
             return $randomString;
         }
         function generateImage($captchaString) {
-            if (ob_get_level() > 0) {
-                ob_end_clean();
-            }
-        
+            session_start();
             header('Content-type: image/png');
             $_SESSION['captcha'] = $captchaString;
         
@@ -41,19 +38,34 @@
                     $textColor
                 );
             }
-            imagestring($image, 5, 10, 10, $captchaString, $textColor);
-        
+            for ($i=1; $i<=strlen($captchaString);$i++) {
+                  $font_size=rand(22,27);
+                  $r=rand(0,255);
+                  $g=rand(0,255);
+                  $b=rand(0,255);
+                  $index=rand(1,10);
+                  $x=15+(30*($i-1));
+                  $x=rand($x-5,$x+5);
+                  $y=rand(35,45);
+                  $o=rand(-30,30);
+                  $font_color = imagecolorallocate($image, $r ,$g, $b);
+                  imagettftext($image, $font_size, $o, $x, $y ,  $font_color,'fonts/'.$index.'.ttf',$captchaString[$i-1]);
+              }
             imagepng($image);
             imagedestroy($image);
         }
-        function verify() {
+        function verify($userInput, $captchaText) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $userInput = strtoupper($_POST["captcha"]);
-                $captchaText = strtoupper($_SESSION['captcha']);
+                $userInput = strtoupper($userInput);
+                $captchaText = strtoupper($captchaText);
     
-                return $userInput === $captchaText;
+                if($userInput === $captchaText) {
+                    return true;
+                }
             }
-            return false;
+            else {
+                return false;
+            }
         }
     }
 ?>

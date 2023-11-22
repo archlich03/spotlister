@@ -30,6 +30,7 @@ function displayDataToTable() {
         }
     } else if ($result->num_rows == 0 || checkPriv() == 0) {
         echo '<tr><td colspan="5">No elements found. Please login first.</td></tr>';
+        echo '<tr><td colspan="5">If you have already registered, you need to be confirmed first.</td></tr>';
     } else {
         die ("<h1>Error displaying table: </h1>". $conn->error);
     }
@@ -59,6 +60,9 @@ function frequencyToText($frequency) {
     return $answer;
 }
 function testInput($data) {
+    if ($data === null) {
+        return null;
+    }
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);

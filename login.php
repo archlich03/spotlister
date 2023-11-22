@@ -6,6 +6,7 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["login"])) {
         $validationResult = validateLogin($_GET["username"], $_GET["password"]);
+
         if ($validationResult === true){
             $username = $_GET["username"];
             $password = $_GET["password"];
@@ -33,8 +34,7 @@
             } else {
                 $error = "User not found!";
             }
-        }
-        else {
+        } else {
             $error = $validationResult;
         }
     }
