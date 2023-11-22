@@ -10,11 +10,7 @@ require 'csrf_protection.php';
 function displayDataToTable() {
     global $settings;
 
-    $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    $conn = startConn();
 
     $stmt = $conn->prepare("SELECT * FROM Playlists WHERE user_id = ?");
     $stmt->bind_param("i", $_SESSION['userId']);
@@ -172,4 +168,16 @@ function validateLogin($username, $password){
             return true;
     }
 
+}
+
+function startConn(){
+    global $settings;
+
+    $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    return $conn;
 }

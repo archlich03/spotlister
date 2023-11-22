@@ -9,11 +9,7 @@
         $url = $_POST["url"];
         $frequency = $_POST["frequency"];
 
-        $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
-
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        $conn = startConn();
 
         $sql = "INSERT INTO Playlists (url, frequency, lastDownload, user_id) VALUES (?, ?, 0, ?)";
 

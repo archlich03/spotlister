@@ -8,11 +8,7 @@
         $userId = testInput($_SESSION['userId']);
         $id = testInput((int)$_POST["id"]);
         
-        $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
-    
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        $conn = startConn();
     
         $stmt = $conn->prepare("DELETE FROM Playlists WHERE id = ? AND user_id = ?");
         $stmt->bind_param("ii", $id, $userId);

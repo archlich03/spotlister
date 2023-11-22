@@ -8,11 +8,7 @@
 
     $id = $url = $frequency = "";
 
-    $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    $conn = startConn();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && empty($urlErr) && empty($frequencyErr)) {
         $id = testInput((int)$_POST["id"]);

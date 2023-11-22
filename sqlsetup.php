@@ -5,12 +5,7 @@ require 'conf.php';
 function setupDB() {
     global $settings;
 
-    $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    echo "Connected successfully";
+    $conn = startConn();
     
     $sqlPlaylists = "
     CREATE TABLE IF NOT EXISTS Playlists (

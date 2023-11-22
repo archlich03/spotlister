@@ -7,11 +7,7 @@
             $username = $_POST["username"]; // is validateRegister, validationResult
             $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-            $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
-
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
+            $conn = startConn();
             
             $approved = 0;
             $stmt = $conn->prepare("INSERT INTO Users (username, password, approved) VALUES (?, ?, ?)");
