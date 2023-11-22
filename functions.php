@@ -184,7 +184,7 @@ function startConn(){
 
 function checkPriv(){
     $conn = startConn();
-    $userId = $_SESSION['userId'];
+    $userId = testInput($_SESSION['userId']);
 
 
     $stmt = $conn->prepare("SELECT approved FROM Users WHERE id = ?");

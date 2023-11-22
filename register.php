@@ -1,6 +1,8 @@
 <?php
     require 'functions.php';
-    checkSession();
+    if(session_status() == PHP_SESSION_ACTIVE){
+        redirectIndex();
+    }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $validationResult = validateRegister($_POST["username"], $_POST["password"]);

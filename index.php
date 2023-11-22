@@ -1,6 +1,5 @@
 <?php
     require 'functions.php';
-    checkSession();
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,6 +1,8 @@
 <?php
     require 'functions.php';
-    checkSession();
+    if(session_status() == PHP_SESSION_ACTIVE){
+        redirectIndex();
+    }
 
     if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["login"])) {
         $validationResult = validateLogin($_GET["username"], $_GET["password"]);
