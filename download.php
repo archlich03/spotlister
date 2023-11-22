@@ -6,23 +6,23 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST["download_type"])) {
             $format = $_POST["download_type"];
-            $data = readJSON($settings['dataFileName']);
-    
+
             if ($format === 'CSV') {
                 header('Content-Type: text/csv');
                 header('Content-Disposition: attachment; filename="data.csv"');
-                $csvData = convertDataToCSV($data);
+                $csvData = convertDataToCSV();
                 echo $csvData;
                 exit;
             } elseif ($format === 'JSON') {
                 header('Content-Type: application/json');
                 header('Content-Disposition: attachment; filename="data.json"');
-                echo json_encode($data, JSON_PRETTY_PRINT);
+                $jsonData = convertDataToJSON();
+                echo $jsonData;
                 exit;
             } elseif ($format === 'TXT') {
                 header('Content-Type: text/plain');
                 header('Content-Disposition: attachment; filename="data.txt"');
-                $textData = convertDataToText($data);
+                $textData = convertDataToText();
                 echo $textData;
                 exit;
             } else {
