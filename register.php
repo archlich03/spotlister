@@ -1,6 +1,6 @@
 <?php
     require 'functions.php';
-    require 'captcha.php';
+    require 'captcha/captcha.php';
     if (checkPriv() > 0) {
         redirectIndex();
     }
@@ -44,7 +44,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css?<?=date('U')?>">
+    <link rel="stylesheet" href="style/style.css?<?=date('U')?>">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
@@ -128,7 +128,7 @@
         <div class="captcha-container">
             <div class="captcha-image">
                 <label for="captcha">Enter the Captcha:</label>
-                <img src="captcha_image.php" alt="Captcha Image">
+                <img src="captcha/captcha_image.php" alt="Captcha Image">
             </div>
             <input type="text" id="captcha" name="captcha" required>
         </div>

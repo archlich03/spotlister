@@ -49,7 +49,7 @@
                   $y=rand(35,45);
                   $o=rand(-30,30);
                   $font_color = imagecolorallocate($image, $r ,$g, $b);
-                  imagettftext($image, $font_size, $o, $x, $y ,  $font_color,'fonts/'.$index.'.ttf',$captchaString[$i-1]);
+                  imagettftext($image, $font_size, $o, $x, $y ,  $font_color,'../fonts/'.$index.'.ttf',$captchaString[$i-1]);
               }
             imagepng($image);
             imagedestroy($image);

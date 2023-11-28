@@ -5,7 +5,7 @@
 <html>
     <head>
         <title>Sitemap</title>
-        <link rel="stylesheet" href="style.css?<?=date('U')?>">
+        <link rel="stylesheet" href="style/style.css?<?=date('U')?>">
         <meta name="description" content="Page which contains all the available pages.">
         <meta name="keywords" content="spotify, converter, link">
         <meta name="author" content="We, The People">
