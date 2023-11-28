@@ -5,8 +5,6 @@
         redirectIndex();
     }
 
-    // TODO: admin panel
-
     $captcha = new Captcha();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

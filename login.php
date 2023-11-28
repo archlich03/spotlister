@@ -26,7 +26,6 @@
                     session_start();
 
                     $_SESSION['userId'] = testInput($userId);
-                    $_SESSION['username'] = testInput($dbUsername);
                     redirectIndex();
                 } else {
                     $error = "User not found!";

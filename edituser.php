@@ -7,12 +7,15 @@
 
     $conn = startConn();
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && empty($urlErr) && empty($frequencyErr)) {
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
         $id = testInput((int)$_POST["id"]);
-        $userId = testInput($_SESSION['userId']);
+        $approved = testInput($_POST["approved"]);
+        if($approved == null){
+            $approved = 0;
+        }
 
-        $stmt = $conn->prepare("UPDATE Playlists SET url = ?, frequency = ? WHERE id = ? AND user_id = ?");
-        $stmt->bind_param("siii", $url, $frequency, $id, $user_id);
+        $stmt = $conn->prepare("UPDATE Users SET approved = ? WHERE id = ?");
+        $stmt->bind_param("ii", $approved, $id);
         $stmt->execute();
 
         if ($stmt->errno) {
@@ -21,20 +24,20 @@
         } else {
             echo "Record updated successfully";
             closeConn($stmt, $conn);
-            redirectIndex();
+            header("Location: panel.php");
+            die();
         }
 
     } 
-    elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && empty($urlErr)) {
+    elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 
         $id = testInput((int)$_GET["id"]);
-        $userId = testInput($_SESSION['userId']);
 
-        $stmt = $conn->prepare("SELECT url, frequency FROM Playlists WHERE id = ? AND user_id = ?");
-        $stmt->bind_param("ii", $id, $user_id);
+        $stmt = $conn->prepare("SELECT approved FROM Users WHERE id = ?");
+        $stmt->bind_param("i", $id);
         $stmt->execute();
 
-        $stmt->bind_result($url, $frequency);
+        $stmt->bind_result($approved);
         $stmt->fetch();
         
         if ($stmt->errno) {
@@ -47,6 +50,7 @@
     else {
         die ("<h1>Invalid request.</h1><br>URL related errors: $urlErr<br>Frequency related errors: $frequencyErr");
     }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,23 +78,19 @@
         require 'template/sidebar.php';
     ?>
     <div id='content'>
-        <h1 id='title'>Edit element</h1>
+    <h1 id='title'>Edit User</h1>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-        <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
-
-            <p>Playlist URL: <input type="url" name="url" style="width: 450px;" value="<?php echo htmlspecialchars($url); ?>"></p>
-            <span class="error"><?php echo $urlErr;?></span>
+            <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
             <br>
-            <p>Check frequency (in hours): <input type="number" name="frequency" min="<?=$frequencyMinValue;?>" max="<?=$settings['maxRefreshTime']?>" value="<?=htmlspecialchars($frequency);?>"></p>
-            <span class="error"><?php echo $frequencyErr;?></span>
-            <br><br>
+            <p>Approved: <input type="checkbox" name="approved" value="1" <?php echo ($approved == 1) || ($approved == 2) ? 'checked' : ''; ?>></p>
+            <p>Make admin?: <input type="checkbox" name="approved" value="2" <?php echo ($approved == 2) ? 'checked' : ''; ?>></p>
             <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-            <input class="back" type="button" value="Back" onclick="location.href='index.php'">
+            <input class="back" type="button" value="Back" onclick="location.href='panel.php'">
             <input type="submit" name="submit" value="Submit">
         </form><br>
         <div id="output"></div>
         <?php
-            require 'template/footer.php';
+        require 'template/footer.php';
         ?>
     </div>
 </body>

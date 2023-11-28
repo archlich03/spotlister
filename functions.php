@@ -29,7 +29,7 @@ function displayDataToTable() {
             echo '</tr>';
         }
     } else if ($result->num_rows == 0 || checkPriv() == 0) {
-        echo '<tr><td colspan="5">No elements found. Please login first.</td></tr>';
+        echo '<tr><td colspan="5">No elements found. Please login first, or add new entries.</td></tr>';
         echo '<tr><td colspan="5">If you have already registered, you need to be confirmed first.</td></tr>';
     } else {
         die ("<h1>Error displaying table: </h1>". $conn->error);
@@ -51,7 +51,8 @@ function displayUsersToTable() {
             echo '<td>' . $row['id'] . '</td>';
             echo '<td>' . $row['username'] . '</td>';
             echo '<td>' . numberToPriv($row['approved']) . '</td>';
-            echo '<td><a href="edit.php?id=' . $row['id'] . '">Edit</a></td>';
+            echo '<td><a href="edituser.php?id=' . $row['id'] . '">Edit</a></td>';
+            echo '<td><a href="deleteuser.php?id=' . $row['id'] . '">Delete</a></td>';
             echo '</tr>';
         }
     } else {
@@ -88,7 +89,7 @@ function numberToPriv($priv) {
     if ($priv == 0)
         $answer = "User";
     elseif ($priv == 1)
-        $answer = "Moderator";
+        $answer = "Approved";
     else
         $answer = "Admin";
     return $answer;
