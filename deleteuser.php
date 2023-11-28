@@ -11,8 +11,15 @@
         
         $conn = startConn();
     
-        $stmt = $conn->prepare("DELETE FROM Playlists WHERE id = ? AND user_id = ?");
-        $stmt->bind_param("ii", $id, $userId);
+        $stmt = $conn->prepare("DELETE FROM Playlists WHERE user_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        closeConn($stmt, $conn);
+        $conn = startConn();
+
+        $stmt = $conn->prepare("DELETE FROM Users WHERE id = ?");
+        $stmt->bind_param("i", $id);
         $stmt->execute();
     
         if ($stmt->errno) {
@@ -21,7 +28,8 @@
         } else {
             echo "Record deleted successfully";
             closeConn($stmt, $conn);
-            redirectIndex();
+            header("Location: panel.php");
+            die();
         }
     } else {
         $error_message = "<h1>Invalid request.</h1><br>Element with id $id doesn't exist.";
@@ -53,12 +61,12 @@
         require 'template/sidebar.php';
     ?>
     <div id='content'>
-        <h1 id='title'>Are you sure you want to delete this element?</h1>
+        <h1 id='title'>Are you sure you want to delete this user?</h1>
         <div>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($_GET['id']); ?>">
                 <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-                <input class="back" type="button" value="No" onclick="location.href='index.php'">
+                <input class="back" type="button" value="No" onclick="location.href='panel.php'">
                 <input type="submit" name="submit" value="Yes">
             </form>
         </div>

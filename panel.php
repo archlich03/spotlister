@@ -1,5 +1,7 @@
 <?php
     require 'functions.php';
+
+    checkSession();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,16 +25,16 @@
         <table>
             <thead>
                 <tr>
-                    <th>URL</th>
-                    <th>Check Frequency</th>
-                    <th>Last Check</th>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Role</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                    displayDataToTable();
+                    displayUsersToTable();
                 ?>
             </tbody>
         </table>

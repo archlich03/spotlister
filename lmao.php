@@ -2,7 +2,8 @@
 /*
     :)
 */
-require 'csrf_protection.php';
+require 'functions.php';
+checkSession();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST['text'] == "XD")
@@ -19,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <?php
-        require 'template/header.html';
-        require 'template/sidebar.html';
+        require 'template/header.php';
+        require 'template/sidebar.php';
     ?>
     <div id='content'>
         <h1>A HTML form of all types!</h1>

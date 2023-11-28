@@ -1,3 +1,7 @@
+<?php
+    require 'functions.php';
+    checkSession();
+?>
 <html>
     <head>
         <title>Sitemap</title>
@@ -17,8 +21,8 @@
     </style>
     <body>
         <?php
-            require 'template/header.html';
-            require 'template/sidebar.html';
+            require 'template/header.php';
+            require 'template/sidebar.php';
         ?>
         <div id='content'>
             <h1 id='title'>Here's all the available pages to be visited on this website:</h1>

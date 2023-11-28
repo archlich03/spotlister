@@ -10,16 +10,15 @@ require 'csrf_protection.php';
 function displayDataToTable() {
     global $settings;
 
-    $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
+    $conn = startConn();
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    $stmt = $conn->prepare("SELECT * FROM Playlists WHERE user_id = ?");
+    $stmt->bind_param("i", $_SESSION['userId']);
+    $stmt->execute();
 
-    $sql = "SELECT * FROM Playlists";
-    $result = $conn->query($sql);
+    $result = $stmt->get_result();
     
-    if ($result->num_rows > 0) {
+    if ($result->num_rows > 0 && checkPriv() > 0) {
         while ($row = $result->fetch_assoc()) {
             echo '<tr>';
             echo '<td><a href="' . $row['url'] . '" target="_blank">' . $row['url'] . '</a></td>';
@@ -29,14 +28,40 @@ function displayDataToTable() {
             echo '<td><a href="delete.php?id=' . $row['id'] . '">Delete</a></td>';
             echo '</tr>';
         }
-    } else if ($result->num_rows == 0) {
-        echo '<tr><td colspan="5">No elements found</td></tr>';
+    } else if ($result->num_rows == 0 || checkPriv() == 0) {
+        echo '<tr><td colspan="5">No entries found. Please login first, or add new entries.</td></tr>';
+        echo '<tr><td colspan="5">If you have already registered, you need to be confirmed first.</td></tr>';
     } else {
         die ("<h1>Error displaying table: </h1>". $conn->error);
     }
 
-    $conn->close();
+    closeConn($stmt, $conn);
 }
+function displayUsersToTable() {
+    $conn = startConn();
+
+    $stmt = $conn->prepare("SELECT id, username, approved FROM Users");
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0 && checkPriv() > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo '<tr>';
+            echo '<td>' . $row['id'] . '</td>';
+            echo '<td>' . $row['username'] . '</td>';
+            echo '<td>' . numberToPriv($row['approved']) . '</td>';
+            echo '<td><a href="edituser.php?id=' . $row['id'] . '">Edit</a></td>';
+            echo '<td><a href="deleteuser.php?id=' . $row['id'] . '">Delete</a></td>';
+            echo '</tr>';
+        }
+    } else {
+        echo '<p>No users found.</p>';
+    }
+
+    closeConn($stmt, $conn);
+}
+
 
 function closeConn($stmt, $conn){
     $stmt->close();
@@ -59,7 +84,20 @@ function frequencyToText($frequency) {
     }
     return $answer;
 }
+function numberToPriv($priv) {
+    $answer = '';
+    if ($priv == 0)
+        $answer = "User";
+    elseif ($priv == 1)
+        $answer = "Approved";
+    else
+        $answer = "Admin";
+    return $answer;
+}
 function testInput($data) {
+    if ($data === null) {
+        return null;
+    }
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
@@ -135,4 +173,81 @@ function convertDataToJSON(){
     }
     $conn->close();
     return json_encode($json);
+}
+
+function validateRegister($username, $password){
+    $username = testInput($username);
+    $password = testInput($password);
+
+    switch ($password){
+        case strlen($username)==0: // perkelt
+            return "Username cannot be empty";
+        case !strlen($password)>8: // iki 64
+            return "Password must be at least 8 characters long";
+        case !preg_match('/[A-Z]/', $password)
+            || !preg_match('/[a-z]/', $password)
+            || !preg_match('/[0-9]/', $password)
+            || !preg_match('/[^A-Za-z0-9]/', $password):
+            return "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character";
+        default:
+            return true;
+    }
+
+}
+function validateLogin($username, $password){
+    $username = testInput($username);
+    $password = testInput($password);
+
+    switch ($password){
+        case strlen($username)==0:
+            return "Username cannot be empty";
+        case strlen($password)==0:
+            return "Password cannot be empty";
+        default:
+            return true;
+    }
+
+}
+
+function startConn(){
+    global $settings;
+
+    $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    return $conn;
+}
+
+function checkPriv(){
+    $conn = startConn();
+    if(!isset($_SESSION['userId'])) {
+        return false;
+    }
+    else{
+        $userId = testInput($_SESSION['userId']);
+
+
+        $stmt = $conn->prepare("SELECT approved FROM Users WHERE id = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $stmt->store_result();
+    
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($approved);
+            $stmt->fetch();
+            return $approved;
+        } else {
+            return false;
+        }
+    }
+    
+}
+function checkSession(){
+    if(!isset($_SESSION['userId']) || checkPriv() == false){
+        redirectIndex();
+        exit;
+    }
 }

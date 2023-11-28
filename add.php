@@ -2,20 +2,19 @@
     require 'functions.php';
     require 'validate.php';
 
+    checkSession();
+
     if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($urlErr) && empty($frequencyErr)) {
+        $userId = testInput($_SESSION['userId']);
         $url = $_POST["url"];
         $frequency = $_POST["frequency"];
-    
-        $conn = new mysqli($settings['serverName'], $settings['userName'], $settings['password'], $settings['dbName']);
 
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        $conn = startConn();
 
-        $sql = "INSERT INTO Playlists (url, frequency, lastDownload) VALUES (?, ?, 0)";
+        $sql = "INSERT INTO Playlists (url, frequency, lastDownload, user_id) VALUES (?, ?, 0, ?)";
 
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("si", $url, $frequency);
+        $stmt->bind_param("sii", $url, $frequency, $userId);
         $stmt->execute();
 
         if ($stmt->errno) {
@@ -25,9 +24,7 @@
             echo "New record created successfully";
             closeConn($stmt, $conn);
             redirectIndex();
-        }
-
-        
+        }   
     }
 ?>
 <!DOCTYPE html>
@@ -52,8 +49,8 @@
 </style>
 <body>
     <?php
-        require 'template/header.html';
-        require 'template/sidebar.html';
+        require 'template/header.php';
+        require 'template/sidebar.php';
     ?>
     <div id='content'>
         <h1 id='title'>Add an element</h1>
