@@ -143,5 +143,9 @@ This starts the development server. You can navigate to it in your favorite web 
 
 ![image](https://github.com/archlich03/spotlister/assets/129758495/211c4cc1-8447-42e3-af4a-080ac11f0e68)
 
-That's it!
+In your address bar, navigate to `sqlsetup.php` to setup the tables required:
+
+![image](https://github.com/archlich03/spotlister/assets/129758495/6ecea20e-f08e-4640-be8a-532717b4882f)
+
+Now you can use the app!
 
