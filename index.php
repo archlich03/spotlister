@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style.css?<?=date('U')?>">
+    <link rel="stylesheet" href="style/style.css">
     <meta name="description" content="Tool which converts spotify link information.">
     <meta name="keywords" content="spotify, converter, link">
     <meta name="author" content="We, The People">

@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>All HTML Input Types</title>
-    <link rel="stylesheet" href="style/style.css?<?=date('U')?>">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
     <?php
