@@ -7,7 +7,7 @@ Currently only tested with GNU/Linux.
 
 We don't use any package managers like composer. Only PHP and some of it's modules are necessary.
 
-*1. Clone the repository*
+## *1. Clone the repository*
 
 Use `git clone` or whatever method you prefer to clone the repository:
 
@@ -15,7 +15,7 @@ Use `git clone` or whatever method you prefer to clone the repository:
 git clone https://github.com/archlich03/spotlister.git
 ``` 
 
-*2. Install PHP and dependencies*
+## *2. Install PHP and dependencies*
 
 Install PHP on your system. You can find guides on how to do so for your distribution online. On Ubuntu/Debian, it's:
 
@@ -29,7 +29,7 @@ Don't forget to also install all the base packages:
 sudo apt-get install -y php8.1-cli php8.1-common php8.1-mysql php8.1-zip php8.1-gd php8.1-mbstring php8.1-curl php8.1-xml php8.1-bcmath
 ```
 
-*3. Install MariaDB*
+## *3. Install MariaDB*
 
 This project uses MariaDB. You can use another kind of database if you like.
 
@@ -110,7 +110,7 @@ After this, you can exit the configuration.
 exit
 ```
 
-*4. Change the default settings*
+## *4. Change the default settings*
 
 Navigate to `conf.php` in your cloned repository folder. Change the following:
 
@@ -123,7 +123,7 @@ $settings['dbName'] = "spotlister"; // name of the DB
 
 With the settings you defined in the mariaDB setup.
 
-*5. Getting SpotDL*
+## *5. Getting SpotDL*
 
 You can get SpotDL from [here](https://github.com/spotDL/spotify-downloader). You need the `spotdl-4.2.0-linux` file.
 
@@ -131,7 +131,7 @@ Once downloaded, place it in the `scripts/` folder.
 
 **Note: If you've downloaded a later version of spotDL, make sure to change the spotDL executable's version in `readDB.py` so that it would match the new one.**
 
-*6. Launching the app*
+## *6. Launching the app*
 
 Navigate to the folder where you cloned the repository, and type:
 
