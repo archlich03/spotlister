@@ -4,8 +4,6 @@ require 'conf.php';
 require 'functions.php';
 
 function setupDB() {
-    global $settings;
-
     $conn = startConn();
     
     $sqlPlaylists = "
@@ -33,11 +31,9 @@ function setupDB() {
     )
     ";
     
-    if ($conn->query($sqlPlaylists) === TRUE && $conn->query($sqlScanData) === TRUE && $conn->query($sqlUsers) === TRUE) {
-        echo "\nTables created successfully";
-    } else {
-        die ("<h1>Error creating table: </h1>". $conn->error);
-    }
+    $conn->query($sqlPlaylists);
+    $conn->query($sqlScanData);
+    $conn->query($sqlUsers);
     $conn->close();
 }
 

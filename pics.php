@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add an element</title>
-    <link rel="stylesheet" href="style.css?<?=date('U')?>">
+    <link rel="stylesheet" href="style/style.css">
     <meta name="description" content="Adds new element.">
     <meta name="keywords" content="spotify, converter, link">
     <meta name="author" content="We, The People">
@@ -23,22 +23,22 @@
     ?>
     <div id='content'>
         <div class="gallery">
-        <a target="_blank" href="img_5terre.jpg">
-            <img src="img_5terre.jpg" alt="Cinque Terre" width="600" height="400">
+        <a target="_blank" href="photos/img_5terre.jpg">
+            <img src="photos/img_5terre.jpg" alt="Cinque Terre" width="600" height="400">
         </a>
         <div class="desc">Gražu</div>
         </div>
 
         <div class="gallery">
-        <a target="_blank" href="img_forest.jpg">
-            <img src="img_forest.jpg" alt="Forest" width="600" height="400">
+        <a target="_blank" href="photos/img_forest.jpg">
+            <img src="photos/img_forest.jpg" alt="Forest" width="600" height="400">
         </a>
         <div class="desc">Gražiau</div>
         </div>
 
         <div class="gallery">
-        <a target="_blank" href="img_lights.jpg">
-            <img src="img_lights.jpg" alt="Northern Lights" width="600" height="400">
+        <a target="_blank" href="photos/img_lights.jpg">
+            <img src="photos/img_lights.jpg" alt="Northern Lights" width="600" height="400">
         </a>
         <div class="desc">Gražiausia</div>
         </div><br>
