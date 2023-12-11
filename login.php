@@ -4,12 +4,12 @@
         redirectIndex();
     }
 
-    if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["login"])) {
-        $validationResult = validateLogin($_GET["username"], $_GET["password"]);
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
+        $validationResult = validateLogin($_POST["username"], $_POST["password"]);
 
         if ($validationResult === true){
-            $username = $_GET["username"];
-            $password = $_GET["password"];
+            $username = $_POST["username"];
+            $password = $_POST["password"];
 
             $conn = startConn();
 
@@ -102,7 +102,7 @@
 </style>
 <body>
 <main>
-    <form action="login.php" method="get">
+    <form action="login.php" method="post">
         <h1>Login</h1>
         <div>
             <label for="username">Username:</label>
