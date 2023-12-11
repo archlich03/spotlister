@@ -116,8 +116,10 @@ function convertDataToCSV() {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT id, url, frequency, lastDownload FROM Playlists";
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("SELECT id, url, frequency, lastDownload FROM Playlists WHERE user_id = ?");
+    $stmt->bind_param("i", $_SESSION['userId']);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -137,8 +139,10 @@ function convertDataToText() {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT id, url, frequency, lastDownload FROM Playlists";
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("SELECT id, url, frequency, lastDownload FROM Playlists WHERE user_id = ?");
+    $stmt->bind_param("i", $_SESSION['userId']);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -163,8 +167,10 @@ function convertDataToJSON(){
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT id, url, frequency, lastDownload FROM Playlists";
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("SELECT id, url, frequency, lastDownload FROM Playlists WHERE user_id = ?");
+    $stmt->bind_param("i", $_SESSION['userId']);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
