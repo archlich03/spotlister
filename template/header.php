@@ -7,7 +7,7 @@
                 echo '<p class="profile"><a href="profile.php">Profile</a></p>';
                 break;
             case 2:
-                echo '<p style="margin-top:10px;" class="panel"><a href="panel.php">Panel</a></p>';
+                echo '<p style="margin-top:10px;" class="panel"><a href="panel.php">Panel</a> <a href="profile.php">Profile</a></p>';
                 break;
         }
     ?>
