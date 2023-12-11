@@ -119,11 +119,11 @@
         <h1>Sign Up</h1>
         <div>
             <label for="username">Username:</label>
-            <input type="text" name="username" id="username" required>
+            <input type="text" name="username" id="username" required maxlength="16">
         </div>
         <div>
             <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required>
+            <input type="password" name="password" id="password" required maxlength="24">
         </div>
         <div class="captcha-container">
             <div class="captcha-image">
