@@ -123,7 +123,7 @@
         </div>
         <div>
             <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required maxlength="24">
+            <input type="password" name="password" id="password" required maxlength="64">
         </div>
         <div class="captcha-container">
             <div class="captcha-image">
