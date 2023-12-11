@@ -19,18 +19,29 @@
     
                 $conn = startConn();
                 
-                $approved = 0;
-                $stmt = $conn->prepare("INSERT INTO Users (username, password, approved) VALUES (?, ?, ?)");
-                $stmt->bind_param("ssi", $username, $password, $approved);
-                $stmt->execute();
+                // Check if the username already exists
+                $checkStmt = $conn->prepare("SELECT id FROM Users WHERE username = ?");
+                $checkStmt->bind_param("s", $username);
+                $checkStmt->execute();
+                $checkStmt->store_result();
     
-                if ($stmt->errno) {
-                    closeConn($stmt, $conn);
-                    die("Error: " . $stmt->error);
+                if ($checkStmt->num_rows > 0) {
+                    $error = "Username already taken. Please choose another one.";
                 } else {
-                    closeConn($stmt, $conn);
-                    redirectIndex();
+                    $approved = 0;
+                    $stmt = $conn->prepare("INSERT INTO Users (username, password, approved) VALUES (?, ?, ?)");
+                    $stmt->bind_param("ssi", $username, $password, $approved);
+    
+                    if ($stmt->execute()) {
+                        closeConn($stmt, $conn);
+                        redirectIndex();
+                    } else {
+                        $error = "Error: " . $stmt->error;
+                        closeConn($stmt, $conn);
+                    }
                 }
+    
+                closeConn($checkStmt, $conn);
             } else {
                 $error = $validationResult;
             }

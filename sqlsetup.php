@@ -25,7 +25,7 @@ function setupDB() {
     $sqlUsers = "
     CREATE TABLE IF NOT EXISTS Users (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        username VARCHAR(255) NOT NULL,
+        username VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
         approved INT(1) NOT NULL
     )
