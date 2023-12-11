@@ -19,7 +19,6 @@
     
                 $conn = startConn();
                 
-                // Check if the username already exists
                 $checkStmt = $conn->prepare("SELECT id FROM Users WHERE username = ?");
                 $checkStmt->bind_param("s", $username);
                 $checkStmt->execute();
