@@ -1,5 +1,5 @@
 <?php
-    require 'functions.php';
+    require_once 'functions.php';
     checkSession();
 ?>
 <html>
@@ -21,8 +21,8 @@
     </style>
     <body>
         <?php
-            require 'template/header.php';
-            require 'template/sidebar.php';
+            require_once 'template/header.php';
+            require_once 'template/sidebar.php';
         ?>
         <div id='content'>
             <h1 id='title'>Here's all the available pages to be visited on this website:</h1>
@@ -37,7 +37,7 @@
             </form>
             <div id="output"></div>
             <?php
-                require 'template/footer.php';
+                require_once 'template/footer.php';
             ?>
         </div>
     </body>

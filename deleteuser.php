@@ -1,6 +1,6 @@
 <?php
-    require 'functions.php';
-    require 'validate.php';
+    require_once 'functions.php';
+    require_once 'validate.php';
     checkSession();
 
     $id = $url = $frequency = "";
@@ -57,8 +57,8 @@
 </style>
 <body>
     <?php
-        require 'template/header.php';
-        require 'template/sidebar.php';
+        require_once 'template/header.php';
+        require_once 'template/sidebar.php';
     ?>
     <div id='content'>
         <h1 id='title'>Are you sure you want to delete this user?</h1>
@@ -72,7 +72,7 @@
         </div>
         <div id="output"></div>
         <?php
-            require 'template/footer.php';
+            require_once 'template/footer.php';
         ?>
     </div>
 </body>

@@ -1,5 +1,5 @@
 <?php
-    require 'functions.php';
+    require_once 'functions.php';
     checkSession();
 ?>
 <!DOCTYPE html>
@@ -18,8 +18,8 @@
 </head>
 <body>
     <?php
-        require 'template/header.php';
-        require 'template/sidebar.php';
+        require_once 'template/header.php';
+        require_once 'template/sidebar.php';
     ?>
     <div id='content'>
         <div class="gallery">
@@ -44,7 +44,7 @@
         </div><br>
         <div id="output"></div>
         <?php
-            require 'template/footer.php';
+            require_once 'template/footer.php';
         ?>
     </div>
 </body>
