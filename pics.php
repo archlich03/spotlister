@@ -42,7 +42,14 @@
         </a>
         <div class="desc">Gražiausia</div>
         </div><br>
+        <div class="gallery">
+        <a target="_blank" href="photos/database.jpg">
+            <img src="photos/database.jpg" alt="Database" width="600" height="400">
+        </a>
+        <div class="desc">Duomenų bazė</div>
+        </div><br>
         <div id="output"></div>
+
         <?php
             require 'template/footer.php';
         ?>
