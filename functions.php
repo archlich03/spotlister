@@ -188,6 +188,8 @@ function validateRegister($username, $password){
             return "Password cannot be longer than 64 characters";
         case strlen($username)>24:
             return "Username cannot be longer than 24 characters";
+        case strlen($username)<5:
+            return "Username cannot be shorter than 5 characters";
         case !preg_match('/[A-Z]/', $password)
             || !preg_match('/[a-z]/', $password)
             || !preg_match('/[0-9]/', $password)
