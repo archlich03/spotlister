@@ -186,9 +186,9 @@ function validateRegister($username, $password){
     $password = testInput($password);
 
     switch ($password){
-        case strlen($username)==0: // perkelt
+        case strlen($username)==0:
             return "Username cannot be empty";
-        case !strlen($password)>8: // iki 64
+        case !strlen($password)>8:
             return "Password must be at least 8 characters long";
         case !preg_match('/[A-Z]/', $password)
             || !preg_match('/[a-z]/', $password)
