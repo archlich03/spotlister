@@ -4,8 +4,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require 'conf.php';
-require 'csrf_protection.php';
+require_once 'conf.php';
+require_once 'csrf_protection.php';
 
 function displayDataToTable() {
     global $settings;
@@ -28,7 +28,7 @@ function displayDataToTable() {
             echo '<td><a href="delete.php?id=' . $row['id'] . '">Delete</a></td>';
             echo '</tr>';
         }
-    } else if ($result->num_rows == 0 || checkPriv() == 0) {
+    } elseif ($result->num_rows == 0 || checkPriv() == 0) {
         echo '<tr><td colspan="5">No entries found. Please login first, or add new entries.</td></tr>';
         echo '<tr><td colspan="5">If you have already registered, you need to be confirmed first.</td></tr>';
     } else {

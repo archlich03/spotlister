@@ -1,5 +1,5 @@
 <?php
-    require 'functions.php';
+    require_once 'functions.php';
     if (checkPriv() > 0) {
         redirectIndex();
     }

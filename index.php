@@ -1,10 +1,11 @@
 <?php
-    require 'functions.php';
+    require_once 'functions.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Spotlister</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/style.css">
     <meta name="description" content="Tool which converts spotify link information.">
@@ -16,8 +17,8 @@
 </head>
 <body>
     <?php
-        require 'template/header.php';
-        require 'template/sidebar.php';
+        require_once 'template/header.php';
+        require_once 'template/sidebar.php';
     ?>
     <div id='content'>
         <table>
@@ -40,7 +41,7 @@
         <div id="output"></div>
         <br><br>
         <?php
-            require 'template/footer.php';
+            require_once 'template/footer.php';
         ?>
     </div>
 </body>

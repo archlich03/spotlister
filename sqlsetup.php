@@ -1,7 +1,7 @@
 <?php
 
-require 'conf.php';
-require 'functions.php';
+require_once 'conf.php';
+require_once 'functions.php';
 
 function setupDB() {
     $conn = startConn();

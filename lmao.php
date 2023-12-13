@@ -2,7 +2,7 @@
 /*
     :)
 */
-require 'functions.php';
+require_once 'functions.php';
 checkSession();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -13,15 +13,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>All HTML Input Types</title>
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
     <?php
-        require 'template/header.php';
-        require 'template/sidebar.php';
+        require_once 'template/header.php';
+        require_once 'template/sidebar.php';
     ?>
     <div id='content'>
         <h1>A HTML form of all types!</h1>
@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
         <div id="output"></div>
         <?php
-            require 'template/footer.php';
+            require_once 'template/footer.php';
         ?>
     </div>
 </body>

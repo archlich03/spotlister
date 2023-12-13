@@ -13,7 +13,7 @@ a {
 #header {
     padding: 20px;
     margin: 0;
-    width: calc(100%-40px);
+    width: calc(100% - 40px);
     background-color: #8b0000;
     color: #fff;
     font-size: 24px;
@@ -41,7 +41,7 @@ a {
 #content {
     margin:0;
     margin-left:200px;
-    width: calc(100%-200px);
+    width: calc(100% - 200px);
 }
 
 #sidebar {

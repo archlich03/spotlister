@@ -1,6 +1,6 @@
 <?php
-    require 'functions.php';
-    require 'captcha/captcha.php';
+    require_once 'functions.php';
+    require_once 'captcha/captcha.php';
     if (checkPriv() > 0) {
         redirectIndex();
     }

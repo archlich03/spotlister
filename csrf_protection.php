@@ -6,6 +6,7 @@
             die("CSRF Token Validation Failed!");
         }
     }
+    
 
 
     if (!isset($_SESSION['csrf_token'])) {

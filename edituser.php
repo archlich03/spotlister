@@ -1,6 +1,6 @@
 <?php
-    require 'functions.php';
-    require 'validate.php';
+    require_once 'functions.php';
+    require_once 'validate.php';
     checkSession();
 
     $id = $url = $frequency = "";
@@ -28,7 +28,7 @@
             die();
         }
 
-    } 
+    }
     elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 
         $id = testInput((int)$_GET["id"]);
@@ -74,8 +74,8 @@
 </style>
 <body>
     <?php
-        require 'template/header.php';
-        require 'template/sidebar.php';
+        require_once 'template/header.php';
+        require_once 'template/sidebar.php';
     ?>
     <div id='content'>
     <h1 id='title'>Edit User</h1>
@@ -90,7 +90,7 @@
         </form><br>
         <div id="output"></div>
         <?php
-        require 'template/footer.php';
+        require_once 'template/footer.php';
         ?>
     </div>
 </body>
