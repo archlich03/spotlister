@@ -1,10 +1,8 @@
 <?php
     require_once 'functions.php';
-    require_once 'validate.php';
     checkSession();
 
     $id = $url = $frequency = "";
-
     $conn = startConn();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
@@ -17,13 +15,27 @@
         $stmt = $conn->prepare("UPDATE Users SET approved = ? WHERE id = ?");
         $stmt->bind_param("ii", $approved, $id);
         $stmt->execute();
+        closeConn($stmt, $conn);
 
-        if ($stmt->errno) {
-            closeConn($stmt, $conn);
-            die("Error: " . $stmt->error);
-        } else {
+        if(isset($_POST["password"]) && !empty($_POST["password"])) {
+            $password = testInput($_POST["password"]);
+            $validationResult = validateRegister("usertest", $password);
+            if ($validationResult !== true) {
+                $error = validateRegister("usertest", $password);
+            } else {
+                $password = password_hash($password, PASSWORD_DEFAULT);
+                $conn = startConn();
+                $stmt = $conn->prepare("UPDATE Users SET password = ? WHERE id = ?");
+                $stmt->bind_param("si", $password, $id);
+                $stmt->execute();
+                if ($stmt->errno) {
+                    closeConn($stmt, $conn);
+                    die("Error: " . $stmt->error);
+                }
+            }
+        }
+        if ($error == null) {
             echo "Record updated successfully";
-            closeConn($stmt, $conn);
             header("Location: panel.php");
             die();
         }
@@ -84,9 +96,11 @@
             <br>
             <p>Approved: <input type="checkbox" name="approved" value="1" <?php echo ($approved == 1) || ($approved == 2) ? 'checked' : ''; ?>></p>
             <p>Make admin?: <input type="checkbox" name="approved" value="2" <?php echo ($approved == 2) ? 'checked' : ''; ?>></p>
+            <p>Reset password to: <input type="password" name="password"></p>
             <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
             <input class="back" type="button" value="Back" onclick="location.href='panel.php'">
-            <input type="submit" name="submit" value="Submit">
+            <input type="submit" name="submit" value="Submit"><br>
+            <span class="error"><?php echo isset($error) ? $error : ''; ?></span>
         </form><br>
         <div id="output"></div>
         <?php
