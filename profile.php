@@ -18,11 +18,15 @@
         closeConn($stmt, $conn);
 
         $passwordFromForm = trim($_POST["password"]);
+        $validationResult = validateRegister("usertest", $passwordFromForm);
+        $validationNewResult = validateRegister("usertest", $newPassword);
         if (!password_verify($passwordFromForm, $hashedPassword)) {
             $error = "Your old password does not match.";
         }
-        elseif (validateRegister("user", $passwordFromForm)){
-            $error = validateRegister("user", $passwordFromForm);
+        elseif ($validationResult !== true) {
+            $error = validateRegister("usertest", $passwordFromForm);
+        } elseif ($validationNewResult !== true) {
+            $error = validateRegister("usertest", $newPassword);
         } else {
             $newPassword = password_hash($_POST["newPassword"], PASSWORD_DEFAULT);
             $conn = startConn();
