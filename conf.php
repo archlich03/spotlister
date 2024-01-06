@@ -10,7 +10,7 @@ $settings = array();
 // Database settings
 $settings['serverName'] = "localhost"; // name of the DB server
 $settings['userName'] = "spotlister"; // name of the DB user
-$settings['password'] = "test"; // password of the DB user
+$settings['password'] = 'password'; // password of the DB user
 $settings['dbName'] = "spotlister"; // name of the DB
 
 // Non-critical settings
