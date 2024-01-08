@@ -14,33 +14,37 @@
         
         if ($captcha->verify($userInput, $captchaText)){
             if ($validationResult === true) {
-                $username = $_POST["username"];
-                $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-    
-                $conn = startConn();
-                
-                $checkStmt = $conn->prepare("SELECT id FROM Users WHERE username = ?");
-                $checkStmt->bind_param("s", $username);
-                $checkStmt->execute();
-                $checkStmt->store_result();
-    
-                if ($checkStmt->num_rows > 0) {
-                    $error = "Username already taken. Please choose another one.";
-                } else {
-                    $approved = 0;
-                    $stmt = $conn->prepare("INSERT INTO Users (username, password, approved) VALUES (?, ?, ?)");
-                    $stmt->bind_param("ssi", $username, $password, $approved);
-    
-                    if ($stmt->execute()) {
-                        closeConn($stmt, $conn);
-                        redirectIndex();
+                if ($_POST["password"] == $_POST["confirmpassword"]) {
+                    $username = $_POST["username"];
+                    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+        
+                    $conn = startConn();
+                    
+                    $checkStmt = $conn->prepare("SELECT id FROM Users WHERE username = ?");
+                    $checkStmt->bind_param("s", $username);
+                    $checkStmt->execute();
+                    $checkStmt->store_result();
+        
+                    if ($checkStmt->num_rows > 0) {
+                        $error = "Username already taken. Please choose another one.";
                     } else {
-                        $error = "Error: " . $stmt->error;
-                        closeConn($stmt, $conn);
+                        $approved = 0;
+                        $stmt = $conn->prepare("INSERT INTO Users (username, password, approved) VALUES (?, ?, ?)");
+                        $stmt->bind_param("ssi", $username, $password, $approved);
+        
+                        if ($stmt->execute()) {
+                            closeConn($stmt, $conn);
+                            redirectIndex();
+                        } else {
+                            $error = "Error: " . $stmt->error;
+                            closeConn($stmt, $conn);
+                        }
                     }
+        
+                    closeConn($checkStmt, $conn);
+                } else {
+                    $error = "Passwords are non matching. Please try again.";
                 }
-    
-                closeConn($checkStmt, $conn);
             } else {
                 $error = $validationResult;
             }
@@ -134,6 +138,10 @@
         <div>
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" required maxlength="64">
+        </div>
+        <div>
+            <label for="confirmpassword">Confirm password:</label>
+            <input type="password" name="confirmpassword" id="password" required maxlength="64">
         </div>
         <div class="captcha-container">
             <div class="captcha-image">
