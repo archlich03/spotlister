@@ -27,16 +27,16 @@
     } 
     elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && empty($urlErr)) {
 
-        $id = testInput((int)$_GET["id"]);
-        $userId = testInput($_SESSION['userId']);
+        $id = (int)testInput((int)$_GET["id"]);
+        $userId = (int)testInput($_SESSION['userId']);
 
         $stmt = $conn->prepare("SELECT url, frequency FROM Playlists WHERE id = ? AND user_id = ?");
-        $stmt->bind_param("ii", $id, $user_id);
+        $stmt->bind_param("ii", $id, $userId);
         $stmt->execute();
 
         $stmt->bind_result($url, $frequency);
         $stmt->fetch();
-        
+        //die(var_dump($url));
         if ($stmt->errno) {
             closeConn($stmt, $conn);
             die("Error: " . $stmt->error);
