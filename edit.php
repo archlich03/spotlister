@@ -36,7 +36,6 @@
 
         $stmt->bind_result($url, $frequency);
         $stmt->fetch();
-        //die(var_dump($url));
         if ($stmt->errno) {
             closeConn($stmt, $conn);
             die("Error: " . $stmt->error);
