@@ -19,7 +19,7 @@ def initialize_database():
     conn = mysql.connector.connect(
         host= "localhost",
         user="spotlister",
-        password="test",
+        password="password",
         database="spotlister"
     )
     return conn
