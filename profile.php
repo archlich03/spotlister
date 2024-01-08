@@ -9,41 +9,43 @@
         $userId = testInput($_SESSION['userId']);
         $password = testInput($_POST["password"]);
         $newPassword = testInput($_POST["newPassword"]);
-
-        $stmt = $conn->prepare("SELECT password FROM Users WHERE id = ?");
-        $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        $stmt->bind_result($hashedPassword);
-        $stmt->fetch();
-        closeConn($stmt, $conn);
-
-        $passwordFromForm = trim($_POST["password"]);
-        $validationResult = validateRegister("usertest", $passwordFromForm);
-        $validationNewResult = validateRegister("usertest", $newPassword);
-        if (!password_verify($passwordFromForm, $hashedPassword)) {
-            $error = "Your old password does not match.";
-        }
-        elseif ($validationResult !== true) {
-            $error = validateRegister("usertest", $passwordFromForm);
-        } elseif ($validationNewResult !== true) {
-            $error = validateRegister("usertest", $newPassword);
-        } else {
-            $newPassword = password_hash($_POST["newPassword"], PASSWORD_DEFAULT);
-            $conn = startConn();
-        
-            $stmt = $conn->prepare("UPDATE Users SET password = ? WHERE id = ?");
-            $stmt->bind_param("si", $newPassword, $userId);
+        $confPassword = testInput($_POST["confPassword"]);
+        if ($newPassword == $confPassword) {
+            $stmt = $conn->prepare("SELECT password FROM Users WHERE id = ?");
+            $stmt->bind_param("i", $userId);
             $stmt->execute();
+            $stmt->bind_result($hashedPassword);
+            $stmt->fetch();
+            closeConn($stmt, $conn);
 
-            if ($stmt->errno) {
-                closeConn($stmt, $conn);
-                die("Error: " . $stmt->error);
-            } else {
-                closeConn($stmt, $conn);
-                header("Location: index.php");
-                die();
+            $passwordFromForm = trim($_POST["password"]);
+            $validationResult = validateRegister("usertest", $passwordFromForm);
+            $validationNewResult = validateRegister("usertest", $newPassword);
+            if (!password_verify($passwordFromForm, $hashedPassword)) {
+                $error = "Your old password does not match.";
             }
-        }
+            elseif ($validationResult !== true) {
+                $error = validateRegister("usertest", $passwordFromForm);
+            } elseif ($validationNewResult !== true) {
+                $error = validateRegister("usertest", $newPassword);
+            } else {
+                $newPassword = password_hash($_POST["newPassword"], PASSWORD_DEFAULT);
+                $conn = startConn();
+            
+                $stmt = $conn->prepare("UPDATE Users SET password = ? WHERE id = ?");
+                $stmt->bind_param("si", $newPassword, $userId);
+                $stmt->execute();
+
+                if ($stmt->errno) {
+                    closeConn($stmt, $conn);
+                    die("Error: " . $stmt->error);
+                } else {
+                    closeConn($stmt, $conn);
+                    header("Location: index.php");
+                    die();
+                }
+            }
+        } else $error = "Passwords are non matching. Please try again.";
     }
 ?>
 <!DOCTYPE html>
