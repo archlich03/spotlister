@@ -28,10 +28,10 @@
                     $_SESSION['userId'] = testInput($userId);
                     redirectIndex();
                 } else {
-                    $error = "User not found!";
+                    $error = "Such approved user not found!";
                 }
             } else {
-                $error = "User not found!";
+                $error = "Such approved user not found!";
             }
         } else {
             $error = $validationResult;

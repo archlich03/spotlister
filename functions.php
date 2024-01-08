@@ -24,13 +24,11 @@ function displayDataToTable() {
             echo '<td><a href="' . $row['url'] . '" target="_blank">' . $row['url'] . '</a></td>';
             echo '<td>' . frequencyToText($row['frequency']) . '</td>';
             echo '<td>' . ($row['lastDownload'] != 0 ? date('Y-m-d', $row['lastDownload']) : 'Never') . '</td>';
-            echo '<td><a href="edit.php?id=' . $row['id'] . '">Edit</a></td>';
-            echo '<td><a href="delete.php?id=' . $row['id'] . '">Delete</a></td>';
+            echo '<td><a href="edit.php?id=' . $row['id'] . '">Edit</a> | <a href="delete.php?id=' . $row['id'] . '">Delete</a></td>';
             echo '</tr>';
         }
     } elseif ($result->num_rows == 0 || checkPriv() == 0) {
-        echo '<tr><td colspan="5">No entries found. Please login first, or add new entries.</td></tr>';
-        echo '<tr><td colspan="5">If you have already registered, you need to be confirmed first.</td></tr>';
+        echo '<tr><td colspan="5">No entries found. Please <a href="add.php">add new entries</a>.</td></tr>';
     } else {
         die ("<h1>Error displaying table: </h1>". $conn->error);
     }
@@ -51,8 +49,7 @@ function displayUsersToTable() {
             echo '<td>' . $row['id'] . '</td>';
             echo '<td>' . $row['username'] . '</td>';
             echo '<td>' . numberToPriv($row['approved']) . '</td>';
-            echo '<td><a href="edituser.php?id=' . $row['id'] . '">Edit</a></td>';
-            echo '<td><a href="deleteuser.php?id=' . $row['id'] . '">Delete</a></td>';
+            echo '<td><a href="edituser.php?id=' . $row['id'] . '">Edit</a> | <a href="deleteuser.php?id=' . $row['id'] . '">Delete</a></td>';
             echo '</tr>';
         }
     } else {
@@ -106,6 +103,11 @@ function testInput($data) {
 function redirectIndex() {
     header("Location: index.php");
     exit;
+}
+function sortToLogin() {
+    if (checkPriv() == 0) {
+        header("Location: login.php");
+    }
 }
 function convertDataToCSV() {
     global $settings;
@@ -255,11 +257,65 @@ function checkPriv(){
             return false;
         }
     }
-    
 }
 function checkSession(){
     if(!isset($_SESSION['userId']) || checkPriv() == false){
-        redirectIndex();
+        header("Location: login.php");
         exit;
+    }
+}
+function checkName(){
+    $conn = startConn();
+    if(!isset($_SESSION['userId'])) {
+        return false;
+    }
+    else{
+        $userId = testInput($_SESSION['userId']);
+
+
+        $stmt = $conn->prepare("SELECT username FROM Users WHERE id = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $stmt->store_result();
+    
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($name);
+            $stmt->fetch();
+            return $name;
+        } else {
+            return false;
+        }
+    }
+}
+
+function checkMyPlaylists(){
+    $conn = startConn();
+    if(!isset($_SESSION['userId'])) {
+        return false;
+    }
+    else{
+        $userId = testInput($_SESSION['userId']);
+
+        $stmt = $conn->query("SELECT id FROM Playlists WHERE user_id = $userId");
+        return $stmt->num_rows;
+    }
+}
+
+function checkTotalPlaylists(){
+    $conn = startConn();
+    $stmt = $conn->query("SELECT id FROM Playlists");
+    return $stmt->num_rows;
+}
+
+function checkUsers(){
+    $conn = startConn();
+    if(!isset($_SESSION['userId'])) {
+        return false;
+    }
+    else{
+        $userId = testInput($_SESSION['userId']);
+
+        $stmt = $conn->query("SELECT id FROM Users");
+        return $stmt->num_rows;
     }
 }

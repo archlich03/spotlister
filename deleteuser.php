@@ -2,6 +2,8 @@
     require_once 'functions.php';
     require_once 'validate.php';
     checkSession();
+    if (checkPriv() != 2)
+        header("Location: login.php");
 
     $id = $url = $frequency = "";
 
@@ -38,43 +40,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete element</title>
-    <link rel="stylesheet" href="style/style.css">
-    <meta name="description" content="Deletes selected element.">
-    <meta name="keywords" content="spotify, converter, link">
-    <meta name="author" content="We, The People">
-    <meta name="date" content="2023-09-20">
-    <meta name="expiry-date" content="2077-09-20">
-    <meta name="robots" content="index, follow">
-</head>
-<style>
-    #content{
-        margin-left: 210px;
-        margin-top: -8px;
-    }
-</style>
-<body>
     <?php
         require_once 'template/header.php';
         require_once 'template/sidebar.php';
+        require_once 'bodies/deleteuser.php';
+        require_once 'template/footer.php';
     ?>
-    <div id='content'>
-        <h1 id='title'>Are you sure you want to delete this user?</h1>
-        <div>
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                <input type="hidden" name="id" value="<?php echo htmlspecialchars($_GET['id']); ?>">
-                <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-                <input class="back" type="button" value="No" onclick="location.href='panel.php'">
-                <input type="submit" name="submit" value="Yes">
-            </form>
-        </div>
-        <div id="output"></div>
-        <?php
-            require_once 'template/footer.php';
-        ?>
-    </div>
 </body>
 
 </html>

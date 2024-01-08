@@ -51,48 +51,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit element</title>
-    <link rel="stylesheet" href="style/style.css">
-    <meta name="description" content="Edit playlist/link information.">
-    <meta name="keywords" content="spotify, converter, link">
-    <meta name="author" content="We, The People">
-    <meta name="date" content="2023-09-20">
-    <meta name="expiry-date" content="2077-09-20">
-    <meta name="robots" content="index, follow">
-</head>
-<style>
-    #content{
-        margin-left: 210px;
-        margin-top: -8px;
-    }
-</style>
-<body>
+    <title>Edit playlist</title>
     <?php
         require_once 'template/header.php';
         require_once 'template/sidebar.php';
+        require_once 'bodies/edit.php';
+        require_once 'template/footer.php';
     ?>
-    <div id='content'>
-        <h1 id='title'>Edit element</h1>
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-        <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
-
-            <p>Playlist URL: <input type="url" name="url" style="width: 450px;" value="<?php echo htmlspecialchars($url); ?>"></p>
-            <span class="error"><?php echo $urlErr;?></span>
-            <br>
-            <p>Check frequency (in hours): <input type="number" name="frequency" min="<?=$frequencyMinValue;?>" max="<?=$settings['maxRefreshTime']?>" value="<?=htmlspecialchars($frequency);?>"></p>
-            <span class="error"><?php echo $frequencyErr;?></span>
-            <br><br>
-            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-            <input class="back" type="button" value="Back" onclick="location.href='index.php'">
-            <input type="submit" name="submit" value="Submit">
-        </form><br>
-        <div id="output"></div>
-        <?php
-            require_once 'template/footer.php';
-        ?>
-    </div>
 </body>
 
 </html>
