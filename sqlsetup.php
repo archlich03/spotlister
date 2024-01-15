@@ -48,7 +48,13 @@
         
         $conn->close();
         if($success === true) {
-            unlink(__FILE__);
+            try{
+                unlink(__FILE__);
+                redirectIndex();
+            }
+            catch(Exception $e){
+                echo $e->getMessage();
+            }
         }
     }
 
