@@ -15,7 +15,7 @@ Use `git clone` or whatever method you prefer to clone the repository:
 git clone https://github.com/archlich03/spotlister.git
 ``` 
 
-## *2. Install PHP and dependencies*
+## *2. Install PHP, Python and required dependencies*
 
 Install PHP on your system. You can find guides on how to do so for your distribution online. On Ubuntu/Debian, it's:
 
@@ -27,6 +27,18 @@ Don't forget to also install all the base packages:
 
 ```
 sudo apt install -y php8.2-cli php8.2-common php8.2-mysql php8.2-zip php8.2-gd php8.2-mbstring php8.2-curl php8.2-xml php8.2-bcmath
+```
+
+You also need Python installed on your system. You can find the instructions on the [official python page](https://www.python.org/).
+
+You'll also need the `mysql` python module. Install it using
+
+```
+pip install mysql
+```
+Note: If you're still getting errors, you might also need the `mysql-connector`. Install it like this:
+```
+pip install mysql-connector-python-rf
 ```
 
 ## *3. Install MariaDB*
@@ -122,6 +134,17 @@ $settings['dbName'] = "spotlister"; // name of the DB
 ```
 
 With the settings you defined in the mariaDB setup.
+
+Then go to `scripts/readDB.py` and do the same here:
+
+```
+conn = mysql.connector.connect(
+        host= "localhost",
+        user="spotlister",
+        password="password",
+        database="spotlister"
+    )
+```
 
 ## *5. Getting SpotDL*
 
