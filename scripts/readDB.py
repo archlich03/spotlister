@@ -2,6 +2,7 @@ import os
 import time
 import mysql.connector
 import re
+import glob
 
 def get_last_scan(cursor):
     cursor.execute("SELECT lastScan FROM ScanData")
@@ -23,7 +24,15 @@ def initialize_database():
         database="spotlister"
     )
     return conn
-def process_playlists(cursor, conn, last_scan):
+
+def get_spotdl_executable():
+    matching_files = glob.glob("spotdl*")
+    if matching_files:
+        return matching_files[0]
+    else:
+        return None
+
+def process_playlists(cursor, conn, last_scan, spotdl_executable):
     timestamp = time.time()
     print(f"[{timestamp}] Beginning the reading of all inserted entries.")
 
@@ -40,7 +49,7 @@ def process_playlists(cursor, conn, last_scan):
         else:
             if last_download + frequency * 3600 <= last_scan:
                 print(f"[{timestamp}] Downloading {url}")
-                os.system(f"./spotdl-4.2.0-linux download {url}.")
+                os.system(f"{spotdl_executable} download {url}.")
 
                 cursor.execute("UPDATE Playlists SET lastDownload = %s WHERE id = %s", (int(time.time()), id))
                 conn.commit()
@@ -59,7 +68,13 @@ def main():
     
     last_scan = get_last_scan(cursor)[0]
 
-    process_playlists(cursor, conn, last_scan)
+    spotdl_executable = get_spotdl_executable()
+
+    if spotdl_executable:
+        print(f"spotdl executable found: {spotdl_executable}")
+        process_playlists(cursor, conn, last_scan, spotdl_executable)
+    else:
+        print("spotdl executable not found.")
 
     cursor.close()
     conn.close()

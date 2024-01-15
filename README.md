@@ -125,11 +125,9 @@ With the settings you defined in the mariaDB setup.
 
 ## *5. Getting SpotDL*
 
-You can get SpotDL from [here](https://github.com/spotDL/spotify-downloader). You need the `spotdl-4.2.0-linux` file.
+You can get SpotDL from [here](https://github.com/spotDL/spotify-downloader). You need the `spotdl-*.*.*-linux` (version doesn't matter) file.
 
 Once downloaded, place it in the `scripts/` folder.
-
-**Note: If you've downloaded a later version of spotDL, make sure to change the spotDL executable's version in `readDB.py` so that it would match the new one.**
 
 ## *6. Launching the app*
 
