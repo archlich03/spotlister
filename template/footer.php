@@ -1,6 +1,7 @@
-
     <!-- Footer -->
     <footer class="w3-container w3-padding-16 w3-light-grey">
+        <div id="refreshStart"></div>
+        <div id="output"></div>
         <h4>&copy; <?=date('Y')?>. Benas Ponetauskas ir Rokas Stankūnas</h4>
         <p>The Github project can be found <a href="https://github.com/archlich03/spotlister">here</a>. Pls like and share.</p>
     </footer>

@@ -8,5 +8,4 @@
             <input type="submit" name="submit" value="Yes" class="w3-button w3-gray">
         </form>
     </div>
-    <div id="output"></div>
 </div>

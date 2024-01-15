@@ -11,5 +11,4 @@
             <span class="error"><?php echo isset($error) ? $error : ''; ?></span>
         </form>
     </div>
-    <div id="output"></div>
 </div>

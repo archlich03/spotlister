@@ -17,18 +17,22 @@ def get_last_scan(cursor):
 
 
 def initialize_database():
-    conn = mysql.connector.connect(
-        host= "localhost",
-        user="spotlister",
-        password="password",
-        database="spotlister"
-    )
-    return conn
+    try:
+        conn = mysql.connector.connect(
+            host= "localhost",
+            user="spotlister",
+            password="password",
+            database="spotlister"
+        )
+        return conn
+    except Exception as e:
+        print(e)
+        exit(1)
 
 def get_spotdl_executable():
-    matching_files = glob.glob("spotdl*")
+    matching_files = glob.glob("scripts/spotdl*")
     if matching_files:
-        return matching_files[0]
+         return os.path.basename(matching_files[0])
     else:
         return None
 
@@ -36,21 +40,22 @@ def process_playlists(cursor, conn, last_scan, spotdl_executable):
     timestamp = time.time()
     print(f"[{timestamp}] Beginning the reading of all inserted entries.")
 
-    cursor.fetchall()
-
     cursor.execute("SELECT * FROM Playlists")
     playlists = cursor.fetchall()
+    print(f"[{timestamp}] Found {len(playlists)} playlists.")
 
     for playlist in playlists:
-        id, url, frequency, last_download = playlist
+        id, url, frequency, last_download, _ = playlist
 
         if frequency == -1:
             print(f"[{timestamp}] Removing {url} (frequency = -1).")
+            cursor.execute("DELETE FROM Playlists WHERE id = %s", (id,))
         else:
             if last_download + frequency * 3600 <= last_scan:
                 print(f"[{timestamp}] Downloading {url}")
-                os.system(f"{spotdl_executable} download {url}.")
-
+                os.chdir("scripts")
+                os.system(f"./{spotdl_executable} download {url}")
+                os.chdir("..")
                 cursor.execute("UPDATE Playlists SET lastDownload = %s WHERE id = %s", (int(time.time()), id))
                 conn.commit()
 

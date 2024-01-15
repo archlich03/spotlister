@@ -54,14 +54,14 @@
                 <th>Spotify URL&nbsp;&nbsp;<i class="fa fa-info-circle" title="Link to the tracked playlist"></i></th>
                 <th>Resync Frequency&nbsp;<i class="fa fa-info-circle" title="How often should the playlist be resynced"></i></th>
                 <th>Last checked&nbsp;<i class="fa fa-info-circle" title="How long ago was the playlist last synced"></i></th>
-                <th >Actions</th>
+                <th>Actions</th>
             </tr>
             <?php
             displayDataToTable();
             ?>
             </table>
         </div>
-    <div id="output"></div>
+    </div>
 </div>
 <?php
 if (checkPriv() == 2) {

@@ -14,5 +14,4 @@
                 ?>
             </table>
         </div>
-    <div id="output"></div>
 </div>

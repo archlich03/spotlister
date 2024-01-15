@@ -9,7 +9,7 @@
         <input class="w3-button w3-gray" type="button" value="Back" onclick="location.href='index.php'">
         <input type="submit" name="submit" value="Submit" class="w3-button w3-red">
     </form>
-    <div id="output"></div><br>
+    <br>
     <span>Here are some additional tips:</span>
     <ul>
         <li>If you set check frequency to be -1, then it will be synced only once and removed from the system</li>

@@ -129,6 +129,8 @@ You can get SpotDL from [here](https://github.com/spotDL/spotify-downloader). Yo
 
 Once downloaded, place it in the `scripts/` folder.
 
+Note: Make sure the file has execute permissions.
+
 ## *6. Launching the app*
 
 Navigate to the folder where you cloned the repository, and type:
