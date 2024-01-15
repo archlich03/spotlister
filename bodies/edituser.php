@@ -12,5 +12,4 @@
         <input type="submit" name="submit" value="Submit" class="w3-button w3-gray"><br>
         <span class="error"><?php echo isset($error) ? $error : ''; ?></span>
     </form>
-    <div id="output"></div>
 </div>

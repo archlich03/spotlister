@@ -11,5 +11,4 @@
         <input class="w3-button w3-grey" type="button" value="Back" onclick="location.href='index.php'">
         <input type="submit" name="submit" value="Submit" class="w3-button w3-red">
     </form>
-    <div id="output"></div>
 </div>
