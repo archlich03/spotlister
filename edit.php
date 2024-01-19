@@ -14,7 +14,6 @@
         $frequency = testInput((int)$_POST["frequency"]);
 
         $stmt = $conn->prepare("UPDATE Playlists SET url = ?, frequency = ? WHERE id = ? AND user_id = ?");
-        //die ("UPDATE Playlists SET url = '$url', frequency = $frequency WHERE id = $id AND user_id = $user_id");
         $stmt->bind_param("siii", $url, $frequency, $id, $user_id);
         $stmt->execute();
 
