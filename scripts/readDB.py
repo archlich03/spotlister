@@ -46,12 +46,11 @@ def process_playlists(cursor, conn, last_scan, spotdl_executable):
 
     for playlist in playlists:
         id, url, frequency, last_download, _ = playlist
-
-        if frequency == -1:
-            print(f"[{timestamp}] Removing {url} (frequency = -1).")
-            cursor.execute("DELETE FROM Playlists WHERE id = %s", (id,))
+        
+        if last_download + frequency * 3600 > last_scan:
+            print(f"[{timestamp}] Skipping {url} due to the refresh time coming later.")
         else:
-            if last_download + frequency * 3600 <= last_scan:
+            if frequency != -1:
                 print(f"[{timestamp}] Downloading {url}")
                 os.chdir("scripts")
                 os.system(f"./{spotdl_executable} download {url}")
@@ -61,7 +60,8 @@ def process_playlists(cursor, conn, last_scan, spotdl_executable):
 
                 print(f"[{timestamp}] {url} finished downloading.")
             else:
-                print(f"[{timestamp}] Skipping {url} due to the refresh time coming later.")
+                print(f"[{timestamp}] Removing {url} (frequency = -1).")
+                cursor.execute("DELETE FROM Playlists WHERE id = %s", (id,))
 
     cursor.execute("UPDATE ScanData SET lastScan = %s", (int(time.time()),))
     conn.commit()
