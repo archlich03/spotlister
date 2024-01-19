@@ -28,7 +28,7 @@ def initialize_database():
         )
         return conn
     except Exception as e:
-        print(e)
+        print(f"[{get_timestamp()}] {e}")
         exit(1)
 
 def get_spotdl_executable():
@@ -88,6 +88,7 @@ def main():
 
     cursor.close()
     conn.close()
+    print(f"[{get_timestamp()}] DB connection closed. The process is finished!")
 
 if __name__ == "__main__":
     main()
