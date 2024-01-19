@@ -9,7 +9,9 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && empty($urlErr) && empty($frequencyErr)) {
         $id = testInput((int)$_POST["id"]);
-        $userId = testInput($_SESSION['userId']);
+        $user_id = testInput($_SESSION['userId']);
+        $url = testInput((string)$_POST["url"]);
+        $frequency = testInput((int)$_POST["frequency"]);
 
         $stmt = $conn->prepare("UPDATE Playlists SET url = ?, frequency = ? WHERE id = ? AND user_id = ?");
         $stmt->bind_param("siii", $url, $frequency, $id, $user_id);
